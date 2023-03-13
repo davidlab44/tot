@@ -1,4 +1,4 @@
-package com.david.tot
+package com.david.tot.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
