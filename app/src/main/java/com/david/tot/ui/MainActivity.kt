@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.david.tot.ui.theme.TOTTheme
-import com.david.tot.ui.view.BarkHome
+import com.david.tot.ui.view.ProductList
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +33,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MyApp() {
     Scaffold(
         content = {
-            BarkHome()
+            ProductList()
         }
     )
 }

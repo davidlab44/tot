@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import com.david.tot.domain.model.Product
 
 @Composable
-fun PuppyListItem(puppy: Product) {
+fun ProductListItem(puppy: Product) {
     Row {
         Column {
             Text(text = puppy.name, style = typography.h6)
