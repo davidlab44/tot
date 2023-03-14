@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.david.tot.domain.model.Product
 
 @Composable
-fun ProductListItem(puppy: Product) {
+fun ProductListItem(product: Product) {
     Card(
         modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp).fillMaxWidth(),
         elevation = 2.dp,
@@ -28,7 +28,7 @@ fun ProductListItem(puppy: Product) {
             Column(
                 modifier = Modifier.padding(16.dp).fillMaxWidth().align(Alignment.CenterVertically)
             ) {
-                Text(text = puppy.name, style = typography.h6)
+                Text(text = product.title, style = typography.h6)
                 Text(text = "VIEW DETAIL", style = typography.caption)
             }
         }

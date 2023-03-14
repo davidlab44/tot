@@ -18,7 +18,7 @@ fun ProductList() {
         items(
             items = products,
             itemContent = {
-                ProductListItem(puppy = it)
+                ProductListItem(product = it)
             })
     }
 }
