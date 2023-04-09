@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">TOT</string>
+    <string name="app_name">Tot</string>
+    <string name="map_button_text">Ubicacion en el mapa</string>
 </resources>

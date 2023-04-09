@@ -1,58 +1,32 @@
 package com.david.tot.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.david.tot.ui.theme.TOTTheme
-import com.david.tot.ui.view.ProductList
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.david.tot.ui.theme.TotTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TOTTheme {
-                // A surface container using the 'background' color from the theme
+            TotTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
-                    MyApp()
+                    val recipeViewModel = viewModel<RecipeViewModel>()
+                    NavigationHost(recipeViewModel)
                 }
             }
         }
     }
 }
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Composable
-fun MyApp() {
-    Scaffold(
-        content = {
-            ProductList()
-        }
-    )
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TOTTheme {
-        Greeting("Android")
-    }
-}
