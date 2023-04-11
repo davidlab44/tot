@@ -40,7 +40,7 @@ fun ScreenRecipeList(navegarPantalla2: (String) -> Unit,recipeViewModel:RecipeVi
             },
             label = { Text("Label") }
         )
-
+recipeViewModel.updateRecipeList(text)
         Text(text="Aqui"+text)
 
 

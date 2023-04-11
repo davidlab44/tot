@@ -17,11 +17,20 @@ import javax.inject.Inject
 class RecipeViewModel @Inject constructor(private val getRecipesUseCase: GetRecipesUseCase) : ViewModel() {
 
     var recipeModel by mutableStateOf<List<Recipe>>(emptyList())
-    val st="%Rollitos%"
+    val st="% %"
     fun onCreate() {
         //viewModelScope.launch {
         CoroutineScope(Dispatchers.IO).launch {
             val result = getRecipesUseCase.invoke(st)
+            if (!result.isNullOrEmpty()) {
+                recipeModel =result
+            }
+        }
+    }
+
+    fun updateRecipeList(hash:String){
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = getRecipesUseCase.invoke("%$hash%")
             if (!result.isNullOrEmpty()) {
                 recipeModel =result
             }
