@@ -1,8 +1,6 @@
 package com.david.tot.data
 
 import com.david.tot.data.database.dao.RecipeDao
-import com.david.tot.data.database.entities.RecipeEntity
-import com.david.tot.data.model.RecipeModel
 import com.david.tot.data.network.RecipeService
 import com.david.tot.domain.model.Recipe
 import com.david.tot.domain.model.toDomain
@@ -14,22 +12,22 @@ class RecipeRepository @Inject constructor(
 ) {
 
     suspend fun getAllRecipesFromApi(): List<Recipe> {
-        val response: List<RecipeModel> = api.getRecipes()
+        val response: List<Recipe> = api.getRecipes()
         return response.map { it.toDomain() }
     }
 
     suspend fun getAllRecipesFromDatabase():List<Recipe>{
-        val response: List<RecipeEntity> = recipeDao.getAllRecipes()
+        val response: List<Recipe> = recipeDao.getAllRecipes()
         return response.map { it.toDomain() }
     }
 
     suspend fun getFilteredRecipesFromDatabase(st: String): List<Recipe> {
-        val response: List<RecipeEntity> = recipeDao.getFilteredRecipes(st)
+        val response: List<Recipe> = recipeDao.getFilteredRecipes(st)
         response.map { it.toDomain() }
-        return recipeDao.getFilteredRecipes(st) as List<Recipe>
+        return recipeDao.getFilteredRecipes(st)
     }
 
-    suspend fun insertRecipes(recipes:List<RecipeEntity>){
+    suspend fun insertRecipes(recipes:List<Recipe>){
         recipeDao.insertAll(recipes)
     }
 

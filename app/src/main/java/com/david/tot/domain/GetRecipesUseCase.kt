@@ -1,9 +1,8 @@
 package com.david.tot.domain
 
 import com.david.tot.data.RecipeRepository
-import com.david.tot.data.database.entities.RecipeEntity
-import com.david.tot.data.database.entities.toDatabase
 import com.david.tot.domain.model.Recipe
+import com.david.tot.domain.model.toDatabase
 import javax.inject.Inject
 
 class GetRecipesUseCase @Inject constructor(private val repository: RecipeRepository) {
