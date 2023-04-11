@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.david.tot.domain.GetRecipesUseCase
 import com.david.tot.domain.model.Recipe
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,10 +17,11 @@ import javax.inject.Inject
 class RecipeViewModel @Inject constructor(private val getRecipesUseCase: GetRecipesUseCase) : ViewModel() {
 
     var recipeModel by mutableStateOf<List<Recipe>>(emptyList())
-
+    val st="%Rollitos%"
     fun onCreate() {
-        viewModelScope.launch {
-            val result = getRecipesUseCase()
+        //viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
+            val result = getRecipesUseCase.invoke(st)
             if (!result.isNullOrEmpty()) {
                 recipeModel =result
             }

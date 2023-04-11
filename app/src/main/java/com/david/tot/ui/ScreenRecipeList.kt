@@ -8,7 +8,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,9 +19,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import com.david.tot.domain.model.Recipe
 
 @Composable
@@ -29,6 +27,23 @@ fun ScreenRecipeList(navegarPantalla2: (String) -> Unit,recipeViewModel:RecipeVi
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+
+
+
+        var text by rememberSaveable { mutableStateOf("Text") }
+
+        TextField(
+            value = text,
+            onValueChange = {
+                text = it
+            },
+            label = { Text("Label") }
+        )
+
+        Text(text="Aqui"+text)
+
+
         val listModifier = Modifier.fillMaxSize().background(Color.White).padding(10.dp).align(Alignment.CenterHorizontally)
         LazyColumn(modifier = listModifier) {
             items(recipeViewModel.recipeModel) { recipe ->

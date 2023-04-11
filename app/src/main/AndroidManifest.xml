@@ -25,5 +25,4 @@
         <activity android:name="com.david.tot.ui.MapActivity" >
         </activity>
     </application>
-
 </manifest>

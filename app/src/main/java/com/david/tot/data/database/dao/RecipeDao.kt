@@ -18,5 +18,7 @@ interface RecipeDao {
     @Query("DELETE FROM recipe_table")
     suspend fun deleteAllRecipes()
 
+    @Query("SELECT * FROM recipe_table WHERE name LIKE :recipeHash ORDER BY name DESC LIMIT 10")
+    fun getFilteredRecipes(recipeHash: String): List<RecipeEntity>
 
 }

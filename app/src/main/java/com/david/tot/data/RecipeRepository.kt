@@ -23,6 +23,12 @@ class RecipeRepository @Inject constructor(
         return response.map { it.toDomain() }
     }
 
+    suspend fun getFilteredRecipesFromDatabase(st: String): List<Recipe> {
+        val response: List<RecipeEntity> = recipeDao.getFilteredRecipes(st)
+        response.map { it.toDomain() }
+        return recipeDao.getFilteredRecipes(st) as List<Recipe>
+    }
+
     suspend fun insertRecipes(recipes:List<RecipeEntity>){
         recipeDao.insertAll(recipes)
     }
