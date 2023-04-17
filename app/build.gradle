@@ -13,11 +13,11 @@ tasks.withType(Test) {
 
 
 android {
-    namespace 'com.david.tot'
+    namespace 'com.david.dfv'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.david.tot"
+        applicationId "com.david.dfv"
         minSdk 27
         targetSdk 33
         versionCode 1
