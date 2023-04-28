@@ -18,7 +18,6 @@ class RecipeRepository @Inject constructor(
     }
 
     suspend fun addProduct(product:Product): Product {
-        val recipe = Product(999,"Espinaca","https:\\/\\/static9.depositphotos.com\\/1642482\\/1148\\/i\\/600\\/depositphotos_11489401-stock-photo-orange-fruit.jpg", "glu glu glu",10000,0,0,1)
         return api.addProduct(product)
     }
 
