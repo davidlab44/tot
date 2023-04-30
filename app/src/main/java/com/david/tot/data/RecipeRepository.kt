@@ -17,9 +17,7 @@ class RecipeRepository @Inject constructor(
         return response.map { it.toDomain() }
     }
 
-    suspend fun addProduct(product:Product): Product {
-        return api.addProduct(product)
-    }
+
 
     suspend fun getAllRecipesFromDatabase():List<Recipe>{
         val response: List<Recipe> = recipeDao.getAllRecipes()
