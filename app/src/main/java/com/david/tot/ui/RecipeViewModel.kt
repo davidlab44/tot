@@ -10,7 +10,6 @@ import com.david.tot.data.network.RecipeService
 import com.david.tot.domain.AddProductUseCase
 import com.david.tot.domain.GetRecipesUseCase
 import com.david.tot.domain.model.Product
-import com.david.tot.domain.model.Recipe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipeViewModel @Inject constructor(private val getRecipesUseCase: GetRecipesUseCase,private val addProductUseCase: AddProductUseCase) : ViewModel() {
 
-    var recipeModel by mutableStateOf<List<Recipe>>(emptyList())
+    var recipeModel by mutableStateOf<List<Product>>(emptyList())
     val st="% %"
     fun onCreate() {
         //viewModelScope.launch {

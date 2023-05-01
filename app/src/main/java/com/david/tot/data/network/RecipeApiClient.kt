@@ -7,7 +7,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.david.tot.domain.model.Product
-import com.david.tot.domain.model.Recipe
 import com.david.tot.util.BASE_URL
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -26,8 +25,8 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface RecipeApiClient {
-    @GET("c57b730b-0764-4c0c-a1aa-da32b15982c9")
-    suspend fun getAllRecipes(): Response<List<Recipe>>
+    @GET("products")
+    suspend fun getAllRecipes(): Response<List<Product>>
 
     @POST("products")
     suspend fun addProduct(@Body requestBody: RequestBody): Response<ResponseBody>

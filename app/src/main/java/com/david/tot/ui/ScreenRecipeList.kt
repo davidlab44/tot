@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.david.tot.domain.model.Recipe
+
 
 @Composable
 fun ScreenRecipeList(navegarPantalla2: (String) -> Unit,recipeViewModel:RecipeViewModel) {

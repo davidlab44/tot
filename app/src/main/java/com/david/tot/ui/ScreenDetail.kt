@@ -26,6 +26,7 @@ import com.david.tot.R
 
 @Composable
 fun ScreenDetail(idRecipe: String,recipeViewModel:RecipeViewModel) {
+    /*
     var recipe = recipeViewModel.recipeModel[0]
     recipeViewModel.recipeModel.forEach{
         if(it.id.equals(idRecipe.toInt())) recipe=it
@@ -76,4 +77,5 @@ fun ScreenDetail(idRecipe: String,recipeViewModel:RecipeViewModel) {
             )
         }
     }
+    */
 }

@@ -3,7 +3,6 @@ package com.david.tot.data.network
 import android.content.Intent
 import android.util.Log
 import com.david.tot.domain.model.Product
-import com.david.tot.domain.model.Recipe
 import com.david.tot.util.BASE_URL
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
@@ -18,7 +17,7 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 
 class RecipeService @Inject constructor(private val api:RecipeApiClient) {
-    suspend fun getRecipes(): List<Recipe> {
+    suspend fun getRecipes(): List<Product> {
         //api.rawJSON()
         return withContext(Dispatchers.IO) {
             val response = api.getAllRecipes()
