@@ -15,10 +15,10 @@ interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(recipes:List<Product>)
 
-    @Query("DELETE FROM recipe_table")
+    @Query("DELETE FROM product_table")
     suspend fun deleteAllRecipes()
 
-    @Query("SELECT * FROM recipe_table WHERE name LIKE :recipeHash ORDER BY name DESC LIMIT 10")
+    @Query("SELECT * FROM product_table WHERE name LIKE :recipeHash ORDER BY name DESC LIMIT 10")
     fun getFilteredRecipes(recipeHash: String): List<Product>
 
 }
