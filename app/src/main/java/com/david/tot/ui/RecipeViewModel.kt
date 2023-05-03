@@ -53,4 +53,11 @@ class RecipeViewModel @Inject constructor(private val getRecipesUseCase: GetReci
             }
         }
     }
+
+    fun addProduct(product:Product){
+        //TODO mostrar lo que retorna el producto creado  o por lo menos un aconfirmacion visual para  el usuario de que si se creo el producto
+        CoroutineScope(Dispatchers.IO).launch {
+            addProductUseCase.invoke(product)
+        }
+    }
 }
