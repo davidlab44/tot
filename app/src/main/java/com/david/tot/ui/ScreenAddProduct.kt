@@ -29,7 +29,7 @@ import com.david.tot.domain.model.Product
 
 
 @Composable
-fun ScreenAddProduct(recipeViewModel:RecipeViewModel) {
+fun ScreenAddProduct(addProductViewModel:AddProductViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -69,7 +69,7 @@ fun ScreenAddProduct(recipeViewModel:RecipeViewModel) {
             )
         Button(onClick = {
             product.price = productPrice
-            recipeViewModel.addProduct(product) },
+            addProductViewModel.addProduct(product) },
             shape = RoundedCornerShape(50)) {
             Text("GUARDAR")
         }

@@ -1,7 +1,9 @@
 package com.david.tot.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -64,7 +66,9 @@ class MainActivity : ComponentActivity() {
                             }
                         },
                         floatingActionButton = {
-                            FloatingActionButton(onClick = { }) {
+                            FloatingActionButton(onClick = {
+                                startActivity(Intent(this@MainActivity,AddProductActivity::class.java))
+                            }) {
                                 Icon(
                                     imageVector = Icons.Default.Queue,
                                     contentDescription = "Ver orden de pedido"

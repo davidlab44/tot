@@ -25,5 +25,7 @@
         </activity>
         <activity android:name="com.david.tot.ui.MapActivity" >
         </activity>
+        <activity android:name="com.david.tot.ui.AddProductActivity" >
+        </activity>
     </application>
 </manifest>
