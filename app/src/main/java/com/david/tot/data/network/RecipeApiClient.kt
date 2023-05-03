@@ -29,9 +29,9 @@ interface RecipeApiClient {
     suspend fun getAllRecipes(): Response<List<Product>>
 
     @POST("products")
-    suspend fun addProduct(@Body requestBody: RequestBody): Response<ResponseBody>
+    suspend fun addProduct(@Body product: Product): Response<ResponseBody>
 
-
+/*
     companion object {
         val instance: RecipeApiClient = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -97,6 +97,8 @@ interface RecipeApiClient {
             }
         }
     }
+
+ */
 
 }
 

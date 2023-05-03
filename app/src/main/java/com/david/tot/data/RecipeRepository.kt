@@ -16,6 +16,11 @@ class RecipeRepository @Inject constructor(
         return response.map { it.toDomain() }
     }
 
+    suspend fun addProduct(product:Product){
+        val response = api.addProduct()
+        //return response.map { it.toDomain() }
+    }
+
 
 
     suspend fun getAllRecipesFromDatabase():List<Product>{

@@ -25,6 +25,56 @@ class RecipeService @Inject constructor(private val api:RecipeApiClient) {
         }
     }
 
+    suspend fun addProduct(){
+        return withContext(Dispatchers.IO) {
+            val product:Product=Product(999, "kiwi","image.jpg","bal bla blazzzto",1000,0,0,1)
+
+            val jsonObject = JSONObject()
+            jsonObject.put("id", 999)
+            jsonObject.put("name", "")
+            jsonObject.put("image", "image.png")
+            jsonObject.put("description", "jac kasdfdasfj sdakjf sadlf jasjdf ")
+            jsonObject.put("price", 1000)
+            jsonObject.put("requested_amount", 0)
+
+            val jsonObjectString = jsonObject.toString()
+
+            // usar Gson Converter osea saltarse la siguiente linea
+            // NO ESTOY OBTENIENDO LA CADENA QUE RETORTNO DEL BAKEND
+             val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+            // Do the POST request and get response
+
+            val respuesta = api.addProduct(product)
+            val respuestaBody =respuesta.body().toString()
+            val respuestaBody2 = respuesta.body()
+            val respuestaBody3 =respuesta.errorBody()
+            val respuestaBody4 =respuesta.isSuccessful
+            val respuestaBody5 =respuesta.code()
+            val respuestaRaw =respuesta.raw()
+            val respuestaBody7 =respuesta.headers()
+            val respuestaBody8 =respuestaBody2
+            val respuestaBody11 =respuestaBody3
+            val respuestaBod12 =respuestaRaw
+            val respuestaBody13=respuestaBody4
+            val respuestaBody14 =respuestaBody7
+            val respuestaBod15 =respuestaBody5
+            val respuestaBody9 =respuestaBody
+            //if (response.isSuccessful) { }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*
     fun rawJSON() {

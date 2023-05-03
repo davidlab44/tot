@@ -27,7 +27,10 @@ class RecipeViewModel @Inject constructor(private val getRecipesUseCase: GetReci
     fun onCreate() {
         //viewModelScope.launch {
         CoroutineScope(Dispatchers.IO).launch {
-            ProductRepository().requestProductList()
+            //ProductRepository().requestProductList()
+            val product = Product(999,"Espinaca","fruiit.jpg", "glu glu glu",10000,0,0,1)
+            val a = addProductUseCase.invoke(product)
+
             /*
             val id = Calendar.getInstance().time
             val product = Product(999,"Espinaca","https:\\/\\/static9.depositphotos.com\\/1642482\\/1148\\/i\\/600\\/depositphotos_11489401-stock-photo-orange-fruit.jpg", "glu glu glu",10000,0,0,1)

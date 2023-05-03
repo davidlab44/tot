@@ -13,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ProductRepository() {
-
+/*
     private val apiService = RecipeApiClient.instance
 
     //TODO hacer una peticion GET para comprobar que este camino funciona
@@ -21,5 +21,7 @@ class ProductRepository() {
         apiService.getAllRecipes().body()
         val tt =87
     }
+
+ */
 }
 
