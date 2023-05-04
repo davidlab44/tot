@@ -17,13 +17,14 @@ import javax.inject.Inject
 class RecipeViewModel @Inject constructor(private val getRecipesUseCase: GetRecipesUseCase,private val addProductUseCase: AddProductUseCase) : ViewModel() {
 
     var recipeModel by mutableStateOf<List<Product>>(emptyList())
-    val st="% %"
+    //val st="% %"
+    /*
     fun onCreate() {
         //viewModelScope.launch {
         CoroutineScope(Dispatchers.IO).launch {
             //ProductRepository().requestProductList()
-            val product = Product(999,"Espinaca","fruiit.jpg", "glu glu glu",10000,0,0,1)
-            val a = addProductUseCase.invoke(product)
+            //val product = Product(999,"Espinaca","fruiit.jpg", "glu glu glu",10000,0,0,1)
+            //val a = addProductUseCase.invoke(product)
 
             /*
             val id = Calendar.getInstance().time
@@ -38,6 +39,7 @@ class RecipeViewModel @Inject constructor(private val getRecipesUseCase: GetReci
             }
         }
     }
+    */
 
     fun updateRecipeList(hash:String){
         CoroutineScope(Dispatchers.IO).launch {

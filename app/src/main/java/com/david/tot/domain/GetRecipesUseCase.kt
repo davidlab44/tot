@@ -13,7 +13,8 @@ class GetRecipesUseCase @Inject constructor(private val repository: RecipeReposi
             repository.clearRecipes()
             repository.insertRecipes(recipes.map { it.toDatabase() })
             //recipes
-            recipes = repository.getFilteredRecipesFromDatabase(st)
+            //recipes = repository.getFilteredRecipesFromDatabase(st)
+            recipes = repository.getAllRecipesFromDatabase()
             recipes
         }else{
             repository.getFilteredRecipesFromDatabase(st)

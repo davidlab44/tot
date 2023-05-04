@@ -23,16 +23,12 @@ import coil.compose.rememberImagePainter
 
 @Composable
 fun ScreenRecipeList(navegarPantalla2: (String) -> Unit,recipeViewModel:RecipeViewModel) {
-    recipeViewModel.onCreate()
+    //recipeViewModel.onCreate()
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-
-
-
-        var text by rememberSaveable { mutableStateOf("Text") }
-
+        var text by rememberSaveable { mutableStateOf("") }
         TextField(
             value = text,
             onValueChange = {
@@ -40,13 +36,12 @@ fun ScreenRecipeList(navegarPantalla2: (String) -> Unit,recipeViewModel:RecipeVi
             },
             label = { Text("Label") }
         )
-recipeViewModel.updateRecipeList(text)
+        recipeViewModel.updateRecipeList(text)
         Text(text="Aqui"+text)
-
-
         val listModifier = Modifier.fillMaxSize().background(Color.White).padding(10.dp).align(Alignment.CenterHorizontally)
         LazyColumn(modifier = listModifier) {
-            items(recipeViewModel.recipeModel) { recipe ->
+            val recipeList =recipeViewModel.recipeModel
+            items(recipeList) { recipe ->
                 Card(
                     modifier = Modifier.fillMaxWidth().padding(16.dp).clickable{ navegarPantalla2(recipe.id.toString()) },
                     elevation = 10.dp,
