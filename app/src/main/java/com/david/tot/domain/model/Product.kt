@@ -1,14 +1,13 @@
 package com.david.tot.domain.model
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "product_table")
-data class Product (
+data class Product(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") val id: Int = 0,
+    @ColumnInfo(name = "id") val id: Int? = 0,
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "image") val image: String,
     @ColumnInfo(name = "description") var description: String,

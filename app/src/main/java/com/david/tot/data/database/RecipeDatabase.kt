@@ -6,7 +6,7 @@ import com.david.tot.data.database.dao.RecipeDao
 import com.david.tot.domain.model.Product
 
 
-@Database(entities = [Product::class], version = 8)
+@Database(entities = [Product::class], version = 2)
 abstract class RecipeDatabase: RoomDatabase() {
 
     abstract fun getRecipeDao(): RecipeDao

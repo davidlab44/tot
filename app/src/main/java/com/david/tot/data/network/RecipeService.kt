@@ -1,19 +1,11 @@
 package com.david.tot.data.network
 
-import android.content.Intent
-import android.util.Log
 import com.david.tot.domain.model.Product
-import com.david.tot.util.BASE_URL
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParser
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import retrofit2.Retrofit
 import javax.inject.Inject
 
 class RecipeService @Inject constructor(private val api:RecipeApiClient) {
