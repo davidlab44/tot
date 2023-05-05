@@ -6,11 +6,8 @@ import javax.inject.Inject
 
 class AddProductUseCase @Inject constructor(private val repository: RecipeRepository) {
 
-
-
     suspend operator fun invoke(product: Product) {
         var product = repository.addProduct(product)
     }
-
 
 }

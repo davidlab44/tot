@@ -5,13 +5,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "product_table")
-data class Product(
+data class Product (
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") val id: Int? = 0,
-    @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "id") val id: Int = 0,
+    @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "image") val image: String,
-    @ColumnInfo(name = "description") var description: String,
-    @ColumnInfo(name = "price") var price: Int = 0,
+    @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "price") val price: Int = 0,
     @ColumnInfo(name = "requested_amount") val requested_amount: Int = 0,
     @ColumnInfo(name = "is_milligram") val is_milligram: Int = 0,
     @ColumnInfo(name = "is_unit") val is_unit: Int = 0

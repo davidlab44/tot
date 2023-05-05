@@ -20,7 +20,7 @@ class AddProductViewModel @Inject constructor(private val addProductUseCase: Add
     var productPrice by mutableStateOf<Int>(0)
     fun addProduct(){
         if(productName.trim().length>1&&productDescription.trim().length>1&&productPrice>1){
-            val product = Product(null,productName,"public/tot/product/product-disabled.png", productDescription,productPrice,0,0,1)
+            val product = Product(1001,productName,"public/tot/product/product-disabled.png", productDescription,productPrice,0,0,1)
             CoroutineScope(Dispatchers.IO).launch {
                 addProductUseCase.invoke(product)
             }
