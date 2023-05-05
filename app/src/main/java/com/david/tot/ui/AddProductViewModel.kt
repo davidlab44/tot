@@ -2,7 +2,9 @@ package com.david.tot.ui
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.david.tot.domain.AddProductUseCase
 import com.david.tot.domain.GetRecipesUseCase
@@ -16,17 +18,21 @@ import javax.inject.Inject
 @HiltViewModel
 class AddProductViewModel @Inject constructor(private val getRecipesUseCase: GetRecipesUseCase,private val addProductUseCase: AddProductUseCase) : ViewModel() {
 
-    var aNumber by mutableStateOf<Int>(0)
+    var responseCode by mutableStateOf<Int>(0)
     var productName by mutableStateOf<String>("")
     var productDescription by mutableStateOf<String>("")
     var productPrice by mutableStateOf<Int>(0)
+    var backgroundColor: Color by mutableStateOf(Color.Transparent)
+
     fun addProduct(){
         if(productName.trim().length>1&&productDescription.trim().length>1&&productPrice>1){
             val product = Product(1001,productName,"public/tot/product/product-disabled.png", productDescription,productPrice,0,0,1)
             CoroutineScope(Dispatchers.IO).launch {
-                val responseCode = addProductUseCase.invoke(product)
-                if(responseCode == 201){
-
+                responseCode = addProductUseCase.invoke(product)
+                if(responseCode == 201) {
+                    backgroundColor = Color(0xFF8BE400)
+                }else {
+                    backgroundColor = Color(0xFFFFA4AE)
                 }
             }
         }
