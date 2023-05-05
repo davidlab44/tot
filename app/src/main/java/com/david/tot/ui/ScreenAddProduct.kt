@@ -1,5 +1,6 @@
 package com.david.tot.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.textInputServiceFactory
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -31,6 +32,10 @@ fun ScreenAddProduct(addProductViewModel:AddProductViewModel) {
             modifier = Modifier.padding(start = 16.dp, end = 30.dp, top = 20.dp).fillMaxWidth())
 
         //var productPrice: Int by rememberSaveable { mutableStateOf(0) }
+        var toastConfirmMessage: Boolean by rememberSaveable { mutableStateOf(false) }
+        if(toastConfirmMessage){
+            Toast.makeText(LocalContext.current, "This is a Sample Toast", Toast.LENGTH_LONG).show()
+        }
 
         OutlinedTextField(
             value = productName,
@@ -71,5 +76,6 @@ fun ScreenAddProduct(addProductViewModel:AddProductViewModel) {
             shape = RoundedCornerShape(50)) {
             Text("GUARDAR")
         }
+        //Toast.makeText(LocalContext.current, "fake message", Toast.LENGTH_LONG)
     }
 }

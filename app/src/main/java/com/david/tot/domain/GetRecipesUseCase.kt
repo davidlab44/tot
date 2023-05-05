@@ -1,11 +1,11 @@
 package com.david.tot.domain
 
-import com.david.tot.data.RecipeRepository
+import com.david.tot.data.ProductRepository
 import com.david.tot.domain.model.Product
 import com.david.tot.domain.model.toDatabase
 import javax.inject.Inject
 
-class GetRecipesUseCase @Inject constructor(private val repository: RecipeRepository) {
+class GetRecipesUseCase @Inject constructor(private val repository: ProductRepository) {
     suspend operator fun invoke(st: kotlin.String):List<Product>{
         var recipes = repository.getAllRecipesFromApi()
         return if(recipes.isNotEmpty()){

@@ -3,12 +3,9 @@ package com.david.tot.data.network
 import com.david.tot.domain.model.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
 import javax.inject.Inject
 
-class RecipeService @Inject constructor(private val api:RecipeApiClient) {
+class ProductService @Inject constructor(private val api:IProductApiClient) {
     suspend fun getRecipes(): List<Product> {
         //api.rawJSON()
         return withContext(Dispatchers.IO) {
@@ -17,7 +14,7 @@ class RecipeService @Inject constructor(private val api:RecipeApiClient) {
         }
     }
 
-    suspend fun addProduct(product:Product){
+    suspend fun addProduct(product:Product):Int{
         return withContext(Dispatchers.IO) {
             /*
             val product:Product=Product(999, "kiwi","image.jpg","bal bla blazzzto",1000,0,0,1)
@@ -54,6 +51,7 @@ class RecipeService @Inject constructor(private val api:RecipeApiClient) {
             val respuestaBod15 =respuestaBody5
             val respuestaBody9 =respuestaBody
             //if (response.isSuccessful) { }
+            respuesta.code()
         }
     }
 

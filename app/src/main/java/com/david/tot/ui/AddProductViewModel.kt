@@ -24,7 +24,10 @@ class AddProductViewModel @Inject constructor(private val getRecipesUseCase: Get
         if(productName.trim().length>1&&productDescription.trim().length>1&&productPrice>1){
             val product = Product(1001,productName,"public/tot/product/product-disabled.png", productDescription,productPrice,0,0,1)
             CoroutineScope(Dispatchers.IO).launch {
-                addProductUseCase.invoke(product)
+                val responseCode = addProductUseCase.invoke(product)
+                if(responseCode == 201){
+
+                }
             }
         }
     }

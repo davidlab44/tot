@@ -1,27 +1,42 @@
 package com.david.tot.data
 
- import android.content.Context
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import com.david.tot.data.network.RecipeApiClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.david.tot.data.database.dao.RecipeDao
+import com.david.tot.data.network.ProductService
+import com.david.tot.domain.model.Product
+import com.david.tot.domain.model.toDomain
+import javax.inject.Inject
 
-class ProductRepository() {
-/*
-    private val apiService = RecipeApiClient.instance
+class ProductRepository @Inject constructor(
+    private val api: ProductService,
+    private val recipeDao: RecipeDao
+) {
 
-    //TODO hacer una peticion GET para comprobar que este camino funciona
-    suspend fun requestProductList() {
-        apiService.getAllRecipes().body()
-        val tt =87
+    suspend fun getAllRecipesFromApi(): List<Product> {
+        val response: List<Product> = api.getRecipes()
+        return response.map { it.toDomain() }
     }
 
- */
-}
+    suspend fun addProduct(product:Product):Int{
+        return api.addProduct(product)
+    }
 
+
+    suspend fun getAllRecipesFromDatabase():List<Product>{
+        val response: List<Product> = recipeDao.getAllRecipes()
+        return response.map { it.toDomain() }
+    }
+
+    suspend fun getFilteredRecipesFromDatabase(st: String): List<Product> {
+        val response: List<Product> = recipeDao.getFilteredRecipes(st)
+        response.map { it.toDomain() }
+        return recipeDao.getFilteredRecipes(st)
+    }
+
+    suspend fun insertRecipes(recipes:List<Product>){
+        recipeDao.insertAll(recipes)
+    }
+
+    suspend fun clearRecipes(){
+        recipeDao.deleteAllRecipes()
+    }
+}

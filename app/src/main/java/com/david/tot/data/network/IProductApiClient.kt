@@ -1,30 +1,14 @@
 package com.david.tot.data.network
 
-import android.util.Log
-
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 import com.david.tot.domain.model.Product
-import com.david.tot.util.BASE_URL
-import com.google.gson.GsonBuilder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Response
 //import retrofit2.Retrofit
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface RecipeApiClient {
+interface IProductApiClient {
     @GET("products")
     suspend fun getAllRecipes(): Response<List<Product>>
 
