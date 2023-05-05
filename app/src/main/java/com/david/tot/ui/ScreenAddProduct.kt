@@ -71,7 +71,5 @@ fun ScreenAddProduct(addProductViewModel:AddProductViewModel) {
             shape = RoundedCornerShape(50)) {
             Text("GUARDAR")
         }
-        
-
     }
 }

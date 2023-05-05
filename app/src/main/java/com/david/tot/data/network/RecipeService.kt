@@ -17,8 +17,9 @@ class RecipeService @Inject constructor(private val api:RecipeApiClient) {
         }
     }
 
-    suspend fun addProduct(){
+    suspend fun addProduct(product:Product){
         return withContext(Dispatchers.IO) {
+            /*
             val product:Product=Product(999, "kiwi","image.jpg","bal bla blazzzto",1000,0,0,1)
 
             val jsonObject = JSONObject()
@@ -35,6 +36,7 @@ class RecipeService @Inject constructor(private val api:RecipeApiClient) {
             // NO ESTOY OBTENIENDO LA CADENA QUE RETORTNO DEL BAKEND
              val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
             // Do the POST request and get response
+            */
 
             val respuesta = api.addProduct(product)
             val respuestaBody =respuesta.body().toString()
