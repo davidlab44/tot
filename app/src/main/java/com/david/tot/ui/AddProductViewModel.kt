@@ -5,13 +5,36 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.david.tot.domain.AddProductUseCase
+import com.david.tot.domain.GetRecipesUseCase
 import com.david.tot.domain.model.Product
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okio.utf8Size
 import javax.inject.Inject
 
+@HiltViewModel
+class AddProductViewModel @Inject constructor(private val getRecipesUseCase: GetRecipesUseCase,private val addProductUseCase: AddProductUseCase) : ViewModel() {
+
+    var aNumber by mutableStateOf<Int>(0)
+    var productName by mutableStateOf<String>("")
+    var productDescription by mutableStateOf<String>("")
+    var productPrice by mutableStateOf<Int>(0)
+    fun addProduct(){
+        if(productName.trim().length>1&&productDescription.trim().length>1&&productPrice>1){
+            val product = Product(1001,productName,"public/tot/product/product-disabled.png", productDescription,productPrice,0,0,1)
+            CoroutineScope(Dispatchers.IO).launch {
+                addProductUseCase.invoke(product)
+            }
+        }
+    }
+
+}
+
+
+
+
+/*
 
 class AddProductViewModel @Inject constructor(private val addProductUseCase: AddProductUseCase) : ViewModel() {
 
@@ -27,7 +50,7 @@ class AddProductViewModel @Inject constructor(private val addProductUseCase: Add
         }
     }
 
-    /*
+
     //var recipeModel by mutableStateOf<List<Product>>(emptyList())
     fun onCreate() {
         //viewModelScope.launch {
@@ -46,5 +69,7 @@ class AddProductViewModel @Inject constructor(private val addProductUseCase: Add
         }
     }
 
- */
+
 }
+
+ */

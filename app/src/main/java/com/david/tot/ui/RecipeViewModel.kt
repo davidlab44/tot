@@ -17,6 +17,7 @@ import javax.inject.Inject
 class RecipeViewModel @Inject constructor(private val getRecipesUseCase: GetRecipesUseCase,private val addProductUseCase: AddProductUseCase) : ViewModel() {
 
     var recipeModel by mutableStateOf<List<Product>>(emptyList())
+    var aNumber by mutableStateOf<Int>(0)
     //val st="% %"
     /*
     fun onCreate() {

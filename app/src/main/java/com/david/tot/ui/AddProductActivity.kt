@@ -22,6 +22,7 @@ class AddProductActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val addProductViewModel = viewModel<AddProductViewModel>()
+
                     ScreenAddProduct(addProductViewModel)
                 }
             }
