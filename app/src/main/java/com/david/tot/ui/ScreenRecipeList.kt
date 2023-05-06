@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
+import com.david.tot.util.IMAGE_BASE_URL
 
 
 @Composable
@@ -43,7 +44,7 @@ fun ScreenRecipeList(navegarPantalla2: (String) -> Unit,recipeViewModel:RecipeVi
             val recipeList =recipeViewModel.recipeModel
             items(recipeList) { recipe ->
                 Card(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp).clickable{ navegarPantalla2(recipe.id.toString()) },
+                    modifier = Modifier.fillMaxWidth().padding(8.dp).clickable{ navegarPantalla2(recipe.id.toString()) },
                     elevation = 10.dp,
                     content = {
                         Column( horizontalAlignment = Alignment.CenterHorizontally,
@@ -60,11 +61,11 @@ fun ScreenRecipeList(navegarPantalla2: (String) -> Unit,recipeViewModel:RecipeVi
                                 horizontalArrangement = Arrangement.Center
                             ){
                                 Image(
-                                    painter = rememberImagePainter(recipe.image),
+                                    painter = rememberImagePainter(IMAGE_BASE_URL+recipe.image),
                                     contentDescription = null,
                                     Modifier
                                         .fillMaxSize()
-                                        .height(200.dp)
+                                        .height(100.dp)
                                 )
                             }
                         }
