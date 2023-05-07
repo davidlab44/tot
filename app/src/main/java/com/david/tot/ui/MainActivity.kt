@@ -97,13 +97,13 @@ class MainActivity : ComponentActivity() {
                         ) {
                             val recipeViewModel = viewModel<RecipeViewModel>()
                             NavigationHost(recipeViewModel = recipeViewModel)
+                            /*
                             Text(
                                 text = getResources().getString(R.string.app_name) + " \n ".repeat(
                                     20
                                 )
                             )
-
-
+                            */
                         }
                     }
                 }

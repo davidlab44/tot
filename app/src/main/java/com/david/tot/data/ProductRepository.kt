@@ -20,6 +20,10 @@ class ProductRepository @Inject constructor(
         return api.addProduct(product)
     }
 
+    suspend fun updateProduct(product:Product):Int{
+        api.updateProduct(product)
+        return 1
+    }
 
     suspend fun getAllRecipesFromDatabase():List<Product>{
         val response: List<Product> = recipeDao.getAllRecipes()

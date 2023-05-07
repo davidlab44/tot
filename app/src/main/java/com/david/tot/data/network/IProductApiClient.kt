@@ -3,10 +3,8 @@ package com.david.tot.data.network
 import com.david.tot.domain.model.Product
 import okhttp3.ResponseBody
 import retrofit2.Response
+import retrofit2.http.*
 //import retrofit2.Retrofit
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
 
 interface IProductApiClient {
     @GET("products")
@@ -14,6 +12,9 @@ interface IProductApiClient {
 
     @POST("products")
     suspend fun addProduct(@Body product: Product): Response<ResponseBody>
+
+    @PUT("products/{id}")
+    suspend fun updateProduct(@Path("id") id:String, @Body product:Product): Response<ResponseBody>
 
 /*
     companion object {

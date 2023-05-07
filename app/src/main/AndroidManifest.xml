@@ -29,5 +29,9 @@
             android:name="com.david.tot.ui.AddProductActivity"
             android:noHistory="true">
         </activity>
+        <activity
+            android:name="com.david.tot.ui.UpdateProductActivity"
+            android:noHistory="true">
+        </activity>
     </application>
 </manifest>

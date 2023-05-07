@@ -56,6 +56,13 @@ class ProductService @Inject constructor(private val api:IProductApiClient) {
     }
 
 
+    suspend fun updateProduct(product:Product){
+        return withContext(Dispatchers.IO) {
+            //val product:Product=Product(13, "mojarra","public/tot/product/product-disabled.png","bal bla blazzzto",1000,0,0,1)
+            val response = api.updateProduct(product.id.toString(),product)
+            val res = response
+        }
+    }
 
 
 
