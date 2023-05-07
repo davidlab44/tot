@@ -16,16 +16,16 @@ fun NavigationHost(recipeViewModel:RecipeViewModel) {
 
         composable(RecipeListScreen.route) {
             ScreenRecipeList(
-                navegarPantalla2 = { idRecipe ->
-                    navController.navigate(DetailScreen.createRoute(idRecipe))
+                navegarPantalla2 = { localIdProduct ->
+                    navController.navigate(DetailScreen.createRoute(localIdProduct))
                 },recipeViewModel
             )
         }
 
-        composable(DetailScreen.route,arguments = listOf(navArgument("idRecipe"){ defaultValue = "Pantalla 2" })) { navBackStackEntry ->
-            var idRecipe = navBackStackEntry.arguments?.getString("idRecipe")
-            requireNotNull(idRecipe)
-            ScreenDetail(idRecipe,recipeViewModel)
+        composable(DetailScreen.route,arguments = listOf(navArgument("localIdProduct"){ defaultValue = "Pantalla 2" })) { navBackStackEntry ->
+            var localIdProduct = navBackStackEntry.arguments?.getString("localIdProduct")
+            requireNotNull(localIdProduct)
+            ScreenDetail(localIdProduct,recipeViewModel)
         }
     }
 }

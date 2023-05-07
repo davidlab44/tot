@@ -57,7 +57,8 @@ class UpdateProductActivity : ComponentActivity() {
         val rerds = id+name+description+image+price
         */
         val bundle = intent.extras
-        updateProductViewModel.productId = bundle!!.getString("id").toString()
+        updateProductViewModel.productLocalId = bundle!!.getString("id_local").toString()
+        updateProductViewModel.productRemoteId = bundle!!.getString("id_remote").toString()
         updateProductViewModel.productName = bundle!!.getString("name").toString()
         updateProductViewModel.productDescription = bundle!!.getString("description").toString()
         updateProductViewModel.productImage = bundle!!.getString("image").toString()

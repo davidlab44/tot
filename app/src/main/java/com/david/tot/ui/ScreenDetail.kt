@@ -29,12 +29,12 @@ import com.david.tot.domain.model.Product
 import com.david.tot.util.IMAGE_BASE_URL
 
 @Composable
-fun ScreenDetail(idRecipe: String,recipeViewModel:RecipeViewModel) {
+fun ScreenDetail(localIdProduct: String,recipeViewModel:RecipeViewModel) {
 
     var launchActivity by rememberSaveable { mutableStateOf(false) }
 
     for(product in recipeViewModel.recipeModel){
-        if (product.id == idRecipe.toInt()){
+        if (product.local_id == localIdProduct.toInt()){
             recipeViewModel.productName= product.name
             recipeViewModel.productDescription= product.description
             recipeViewModel.productImage= product.image
@@ -46,7 +46,7 @@ fun ScreenDetail(idRecipe: String,recipeViewModel:RecipeViewModel) {
     if(launchActivity){
         val context = LocalContext.current
         val intent = Intent(context,UpdateProductActivity::class.java)
-        intent.putExtra("id", idRecipe)
+        intent.putExtra("id_local", localIdProduct)
         intent.putExtra("name", recipeViewModel.productName)
         intent.putExtra("description", recipeViewModel.productDescription)
         intent.putExtra("image", recipeViewModel.productImage)

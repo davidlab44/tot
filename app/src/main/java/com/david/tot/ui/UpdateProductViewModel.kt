@@ -20,7 +20,8 @@ import javax.inject.Inject
 class UpdateProductViewModel @Inject constructor(private val updateProductUseCase: UpdateProductUseCase) : ViewModel() {
 
     var responseCode by mutableStateOf<Int>(0)
-    var productId by mutableStateOf<String>("")
+    var productRemoteId by mutableStateOf<String>("")
+    var productLocalId by mutableStateOf<String>("")
     var productName by mutableStateOf<String>("")
     var productDescription by mutableStateOf<String>("")
     var productImage by mutableStateOf<String>("")
@@ -30,7 +31,8 @@ class UpdateProductViewModel @Inject constructor(private val updateProductUseCas
     fun updateProduct(){
         if(productName.trim().length>1&&productDescription.trim().length>1&&productPrice.toInt()>1) {
             val product = Product(
-                productId.toInt(),
+                productLocalId.toInt(),
+                productRemoteId.toInt(),
                 productName,
                 productImage,
                 productDescription,
