@@ -43,8 +43,8 @@ fun ScreenDetail(remoteIdProduct: String, recipeViewModel:RecipeViewModel) {
     if(launchActivity){
         val context = LocalContext.current
         val intent = Intent(context,UpdateProductActivity::class.java)
-        intent.putExtra("id_local", recipeViewModel.productLocalId)
-        intent.putExtra("id_remote", recipeViewModel.productRemoteId)
+        intent.putExtra("id_local", recipeViewModel.productLocalId.toString())
+        intent.putExtra("id_remote", recipeViewModel.productRemoteId.toString())
         intent.putExtra("name", recipeViewModel.productName)
         intent.putExtra("description", recipeViewModel.productDescription)
         intent.putExtra("image", recipeViewModel.productImage)

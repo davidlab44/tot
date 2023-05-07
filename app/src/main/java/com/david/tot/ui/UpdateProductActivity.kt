@@ -8,19 +8,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.*
 import androidx.compose.material.Surface
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,13 +25,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.david.tot.ui.theme.TotTheme
 import com.david.tot.util.IMAGE_BASE_URL
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Delay
-import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class UpdateProductActivity : ComponentActivity() {
@@ -72,12 +61,8 @@ class UpdateProductActivity : ComponentActivity() {
                     //color = MaterialTheme.colors.background
                     color = updateProductViewModel.backgroundColor
                 ) {
-                    if(updateProductViewModel.responseCode != 0){
-                        if (updateProductViewModel.responseCode == 201) {
-                            Toast.makeText(LocalContext.current, "Producto editado exitosamente", Toast.LENGTH_LONG).show()
-                        }else{
-                            Toast.makeText(LocalContext.current, "No se pudo editar el producto", Toast.LENGTH_LONG).show()
-                        }
+                    if (updateProductViewModel.response == 1) {
+                        Toast.makeText(LocalContext.current, "Producto editado exitosamente", Toast.LENGTH_LONG).show()
                         Thread.sleep(500)
                         startActivity(Intent(this@UpdateProductActivity,MainActivity::class.java))
                         finish()

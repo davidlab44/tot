@@ -2,12 +2,9 @@ package com.david.tot.ui
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.david.tot.domain.AddProductUseCase
-import com.david.tot.domain.GetRecipesUseCase
 import com.david.tot.domain.UpdateProductUseCase
 import com.david.tot.domain.model.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UpdateProductViewModel @Inject constructor(private val updateProductUseCase: UpdateProductUseCase) : ViewModel() {
 
-    var responseCode by mutableStateOf<Int>(0)
+    var response by mutableStateOf<Int>(0)
     var productRemoteId by mutableStateOf<String>("")
     var productLocalId by mutableStateOf<String>("")
     var productName by mutableStateOf<String>("")
@@ -42,8 +39,8 @@ class UpdateProductViewModel @Inject constructor(private val updateProductUseCas
                 1
             )
             CoroutineScope(Dispatchers.IO).launch {
-                responseCode = updateProductUseCase.invoke(product)
-                if (responseCode == 201) {
+                response = updateProductUseCase.invoke(product)
+                if (response == 1) {
                     backgroundColor = Color(0xFF8BE400)
                 } else {
                     backgroundColor = Color(0xFFFFA4AE)
