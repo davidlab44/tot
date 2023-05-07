@@ -1,13 +1,9 @@
 package com.david.tot.ui
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -16,45 +12,45 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.os.bundleOf
 import coil.compose.rememberImagePainter
-import com.david.tot.R
-import com.david.tot.domain.model.Product
 import com.david.tot.util.IMAGE_BASE_URL
 
 @Composable
-fun ScreenDetail(localIdProduct: String,recipeViewModel:RecipeViewModel) {
+fun ScreenDetail(remoteIdProduct: String, recipeViewModel:RecipeViewModel) {
 
     var launchActivity by rememberSaveable { mutableStateOf(false) }
 
     for(product in recipeViewModel.recipeModel){
-        if (product.local_id == localIdProduct.toInt()){
+        if (product.id == remoteIdProduct.toInt()){
+            recipeViewModel.productLocalId = product.local_id
+            recipeViewModel.productRemoteId= product.id
             recipeViewModel.productName= product.name
             recipeViewModel.productDescription= product.description
             recipeViewModel.productImage= product.image
             recipeViewModel.productPrice= product.price
-            val gg = product
+            val p = 1
+            val gg = 1+p
+        }else{
+            val p = 0
+            val gg = 0+p
         }
     }
 
     if(launchActivity){
         val context = LocalContext.current
         val intent = Intent(context,UpdateProductActivity::class.java)
-        intent.putExtra("id_local", localIdProduct)
+        intent.putExtra("id_local", recipeViewModel.productLocalId)
+        intent.putExtra("id_remote", recipeViewModel.productRemoteId)
         intent.putExtra("name", recipeViewModel.productName)
         intent.putExtra("description", recipeViewModel.productDescription)
         intent.putExtra("image", recipeViewModel.productImage)
         intent.putExtra("price", recipeViewModel.productPrice.toString())
         context.startActivity(intent)
     }
-
-
 
     Column( horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier

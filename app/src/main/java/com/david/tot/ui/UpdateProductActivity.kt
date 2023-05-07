@@ -72,10 +72,6 @@ class UpdateProductActivity : ComponentActivity() {
                     //color = MaterialTheme.colors.background
                     color = updateProductViewModel.backgroundColor
                 ) {
-                    var productName by rememberSaveable { mutableStateOf(updateProductViewModel.productName) }
-                    var productDescripcion by rememberSaveable { mutableStateOf(updateProductViewModel.productDescription) }
-                    var productImage by rememberSaveable { mutableStateOf(updateProductViewModel.productImage) }
-                    var productPrice by rememberSaveable { mutableStateOf(""+updateProductViewModel.productPrice) }
                     if(updateProductViewModel.responseCode != 0){
                         if (updateProductViewModel.responseCode == 201) {
                             Toast.makeText(LocalContext.current, "Producto editado exitosamente", Toast.LENGTH_LONG).show()
@@ -91,7 +87,7 @@ class UpdateProductActivity : ComponentActivity() {
                         Row(
                             modifier = Modifier.padding(all = 12.dp),horizontalArrangement = Arrangement.Center
                         ){
-                            Text(text = ""+productName, fontSize = 30.sp,fontWeight = FontWeight.Bold,textAlign = TextAlign.Center,
+                            Text(text = ""+updateProductViewModel.productName, fontSize = 30.sp,fontWeight = FontWeight.Bold,textAlign = TextAlign.Center,
                                 modifier = Modifier
                                     .padding(start = 10.dp, end = 10.dp, top = 10.dp)
                                     .fillMaxWidth())
@@ -100,10 +96,9 @@ class UpdateProductActivity : ComponentActivity() {
                             modifier = Modifier.padding(all = 2.dp),horizontalArrangement = Arrangement.Center
                         ){
                             OutlinedTextField(
-                                value = productName,
+                                value = updateProductViewModel.productName ,
                                 onValueChange = {
-                                    updateProductViewModel.productName = it
-                                    productName = updateProductViewModel.productName},
+                                    updateProductViewModel.productName = it },
                                 label = { Text("Nombre:") },
                                 modifier = Modifier
                                     .padding(start = 10.dp, end = 10.dp, top = 10.dp)
@@ -114,10 +109,10 @@ class UpdateProductActivity : ComponentActivity() {
                             modifier = Modifier.padding(all = 2.dp),horizontalArrangement = Arrangement.Center
                         ){
                             OutlinedTextField(
-                                value = productDescripcion,
+                                value = updateProductViewModel.productDescription,
                                 onValueChange = {
                                     updateProductViewModel.productDescription = it
-                                    productDescripcion = updateProductViewModel.productDescription},
+                                    updateProductViewModel.productDescription = updateProductViewModel.productDescription},
                                 label = { Text("Breve descripcion:") },
                                 modifier = Modifier
                                     .padding(start = 10.dp, end = 10.dp, top = 10.dp)
@@ -134,10 +129,10 @@ class UpdateProductActivity : ComponentActivity() {
                                     keyboardType = KeyboardType.Number,
                                     imeAction = ImeAction.Next
                                 ),
-                                value = ""+productPrice,
+                                value = ""+updateProductViewModel.productPrice,
                                 onValueChange = {
                                     updateProductViewModel.productPrice = it
-                                    productPrice = it},
+                                    updateProductViewModel.productPrice = it},
                                 label = { Text("Precio: "+updateProductViewModel.productPrice ) },
                                 modifier = Modifier
                                     .padding(start = 10.dp, end = 10.dp, top = 10.dp)
@@ -154,7 +149,7 @@ class UpdateProductActivity : ComponentActivity() {
                                 horizontalArrangement = Arrangement.Center
                             ){
                                 Image(
-                                    painter = rememberImagePainter(IMAGE_BASE_URL+productImage),
+                                    painter = rememberImagePainter(IMAGE_BASE_URL+updateProductViewModel.productImage),
                                     contentDescription = null,
                                     Modifier
                                         .height(100.dp)

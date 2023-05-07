@@ -64,8 +64,8 @@ class RecipeViewModel @Inject constructor(private val getRecipesUseCase: GetReci
 
     //Edit Product
     //the purpose of this group of variables is jus pass the necesary information to Screen Detail in order to create bundle
-    var productLocalId by mutableStateOf<String>("")
-    var productRemote by mutableStateOf<String>("")
+    var productLocalId by mutableStateOf<Int>(0)
+    var productRemoteId by mutableStateOf<Int>(0)
     var productName by mutableStateOf<String>("")
     var productDescription by mutableStateOf<String>("")
     var productImage by mutableStateOf<String>("")
