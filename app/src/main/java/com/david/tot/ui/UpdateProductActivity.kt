@@ -54,10 +54,6 @@ import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-
-
-
-
 @AndroidEntryPoint
 class UpdateProductActivity : ComponentActivity() {
     private val updateProductViewModel: UpdateProductViewModel by viewModels()
@@ -89,12 +85,15 @@ class UpdateProductActivity : ComponentActivity() {
                     //color = MaterialTheme.colors.background
                     color = updateProductViewModel.backgroundColor
                 ) {
+                    /*
+                    //TODO OJO refactor este IF pasa actualizandose constantemente despues de selccionar la imagen despues de lanzar este metodo rememberLauncherForActivityResult()
                     if (updateProductViewModel.response == 1) {
                         Toast.makeText(LocalContext.current, "Producto editado exitosamente", Toast.LENGTH_LONG).show()
                         Thread.sleep(500)
                         startActivity(Intent(this@UpdateProductActivity,MainActivity::class.java))
-                        //finish()
+                        finish()
                     }
+                    */
                     Column( horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .border(1.dp, Color.Gray, RectangleShape)
@@ -174,117 +173,65 @@ class UpdateProductActivity : ComponentActivity() {
                                     Modifier
                                         .height(100.dp)
                                 )
+                            }
+                        }
 
+                        Row(
+                            modifier = Modifier
+                                .padding(all = 2.dp),
+                            horizontalArrangement = Arrangement.Center
+                        ){
+                            var imageUri by remember {mutableStateOf<Uri?>(null)}
+                            val context = LocalContext.current
+                            val bitmap =  remember {
+                                mutableStateOf<Bitmap?>(null)
+                            }
 
+                            val launcher = rememberLauncherForActivityResult(contract =
+                            ActivityResultContracts.GetContent()) { uri: Uri? ->
+                                imageUri = uri
+                            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                ///////////////////////////////////////////////////////////////
-                                var imageUri by remember {mutableStateOf<Uri?>(null)}
-                                val context = LocalContext.current
-                                val bitmap =  remember {
-                                    mutableStateOf<Bitmap?>(null)
+                            Column() {
+                                Button(onClick = {
+                                    launcher.launch("image/*")
+                                }) {
+                                    Text(text = "Pick image")
                                 }
-
-                                val launcher = rememberLauncherForActivityResult(contract =
-                                ActivityResultContracts.GetContent()) { uri: Uri? ->
-                                    imageUri = uri
-                                }
-
-                                Column() {
-                                    Button(onClick = {
-                                        launcher.launch("image/*")
-                                    }) {
-                                        Text(text = "Pick image")
-                                    }
-
-                                    Spacer(modifier = Modifier.height(12.dp))
-
-                                    imageUri?.let {
-                                        if (Build.VERSION.SDK_INT < 28) {
-                                            bitmap.value = MediaStore.Images
-                                                .Media.getBitmap(context.contentResolver,it)
-
-                                        } else {
-                                            val source = ImageDecoder
-                                                .createSource(context.contentResolver,it)
-                                            bitmap.value = ImageDecoder.decodeBitmap(source)
-                                        }
-
-                                        bitmap.value?.let {  btm ->
-                                            Image(bitmap = btm.asImageBitmap(),
-                                                contentDescription =null,
-                                                modifier = Modifier.size(400.dp))
-                                        }
-
-                                    }
-                                }
-                                ////////////////////////////////////////////////////////////////////
-
-                            Button(onClick = { bitmap.value?.let {
+                                Spacer(modifier = Modifier.height(22.dp))
+                                Button(onClick = { bitmap.value?.let {
                                     updateProductViewModel.updateProductImage(
                                         it
                                     )
                                 } }) {
                                     Text(text = "ENVIAR IMAGEN")
+                                }
+                                Spacer(modifier = Modifier.height(22.dp))
 
+                                imageUri?.let {
+                                    if (Build.VERSION.SDK_INT < 28) {
+                                        bitmap.value = MediaStore.Images
+                                            .Media.getBitmap(context.contentResolver,it)
+
+                                    } else {
+                                        val source = ImageDecoder
+                                            .createSource(context.contentResolver,it)
+                                        bitmap.value = ImageDecoder.decodeBitmap(source)
+                                    }
+
+                                    bitmap.value?.let {  btm ->
+                                        Image(bitmap = btm.asImageBitmap(),
+                                            contentDescription =null,
+                                            modifier = Modifier.size(400.dp))
+                                    }
                                 }
 
-
-
-
                             }
-
-
                         }
                         Row(
                             modifier = Modifier.padding(all = 2.dp),horizontalArrangement = Arrangement.Center
                         ){
+                            /*
                             Button(onClick = {updateProductViewModel.updateProduct()},
                                 modifier = Modifier
                                     .padding(bottom = 10.dp)
@@ -292,6 +239,8 @@ class UpdateProductActivity : ComponentActivity() {
                             ) {
                                 Text("GUARDAR")
                             }
+
+                             */
                         }
                     }
                 }
