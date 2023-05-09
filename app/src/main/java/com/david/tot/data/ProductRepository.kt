@@ -4,6 +4,11 @@ import com.david.tot.data.database.dao.RecipeDao
 import com.david.tot.data.network.ProductService
 import com.david.tot.domain.model.Product
 import com.david.tot.domain.model.toDomain
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.InputStream
 import javax.inject.Inject
 
 class ProductRepository @Inject constructor(
@@ -42,5 +47,15 @@ class ProductRepository @Inject constructor(
 
     suspend fun clearRecipes(){
         recipeDao.deleteAllRecipes()
+    }
+
+    suspend fun updateImageProduct(
+        inputStream: InputStream
+        ) {
+        val part = MultipartBody.Part.createFormData(
+            "pic", "myPic", RequestBody.create("//com.android.providers.media.documents/document/image%3A1000059320".toMediaTypeOrNull(),inputStream.readBytes()
+            )
+        )
+        api.uploadPicture(part)
     }
 }

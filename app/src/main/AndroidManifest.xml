@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
@@ -30,8 +32,7 @@
             android:noHistory="true">
         </activity>
         <activity
-            android:name="com.david.tot.ui.UpdateProductActivity"
-            android:noHistory="true">
+            android:name="com.david.tot.ui.UpdateProductActivity">
         </activity>
     </application>
 </manifest>

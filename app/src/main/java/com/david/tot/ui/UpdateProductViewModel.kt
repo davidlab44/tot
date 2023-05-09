@@ -1,20 +1,27 @@
 package com.david.tot.ui
 
+import android.graphics.Bitmap
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import com.david.tot.domain.UpdateImageProductUseCase
 import com.david.tot.domain.UpdateProductUseCase
 import com.david.tot.domain.model.Product
+import com.david.tot.util.ImageFile
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.InputStream
 import javax.inject.Inject
 
 @HiltViewModel
-class UpdateProductViewModel @Inject constructor(private val updateProductUseCase: UpdateProductUseCase) : ViewModel() {
+class UpdateProductViewModel @Inject constructor(
+    private val updateProductUseCase: UpdateProductUseCase,
+    private val updateImageProductUseCase: UpdateImageProductUseCase,
+    ) : ViewModel() {
 
     var response by mutableStateOf<Int>(0)
     var productRemoteId by mutableStateOf<String>("")
@@ -48,6 +55,15 @@ class UpdateProductViewModel @Inject constructor(private val updateProductUseCas
             }
         }
     }
+
+    fun updateProductImage(bitmap: Bitmap){
+        CoroutineScope(Dispatchers.IO).launch {
+            val inputStream = ImageFile().convertBitmapToInputStream(bitmap)
+            updateImageProductUseCase.invoke(inputStream)
+        }
+    }
+
+
 
 }
 

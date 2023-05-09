@@ -3,6 +3,7 @@ package com.david.tot.data.network
 import com.david.tot.domain.model.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class ProductService @Inject constructor(private val api:IProductApiClient) {
@@ -60,6 +61,15 @@ class ProductService @Inject constructor(private val api:IProductApiClient) {
         return withContext(Dispatchers.IO) {
             //val product:Product=Product(13, "mojarra","public/tot/product/product-disabled.png","bal bla blazzzto",1000,0,0,1)
             val response = api.updateProduct(product.id.toString(),product)
+            val res = response
+        }
+    }
+
+
+    suspend fun uploadPicture(part:MultipartBody.Part){
+        return withContext(Dispatchers.IO) {
+            //val product:Product=Product(13, "mojarra","public/tot/product/product-disabled.png","bal bla blazzzto",1000,0,0,1)
+            val response = api.uploadPicture(part)
             val res = response
         }
     }

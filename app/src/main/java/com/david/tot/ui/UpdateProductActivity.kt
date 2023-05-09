@@ -1,7 +1,10 @@
 package com.david.tot.ui
 
 import android.content.Intent
+import android.graphics.ImageDecoder
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -29,6 +33,30 @@ import coil.compose.rememberImagePainter
 import com.david.tot.ui.theme.TotTheme
 import com.david.tot.util.IMAGE_BASE_URL
 import dagger.hilt.android.AndroidEntryPoint
+
+import android.graphics.Bitmap
+
+import android.net.Uri
+
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.*
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+
+
+
 
 @AndroidEntryPoint
 class UpdateProductActivity : ComponentActivity() {
@@ -65,10 +93,13 @@ class UpdateProductActivity : ComponentActivity() {
                         Toast.makeText(LocalContext.current, "Producto editado exitosamente", Toast.LENGTH_LONG).show()
                         Thread.sleep(500)
                         startActivity(Intent(this@UpdateProductActivity,MainActivity::class.java))
-                        finish()
+                        //finish()
                     }
                     Column( horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.border(1.dp, Color.Gray, RectangleShape).fillMaxWidth().padding(20.dp)) {
+                        modifier = Modifier
+                            .border(1.dp, Color.Gray, RectangleShape)
+                            .fillMaxWidth()
+                            .padding(20.dp)) {
                         Row(
                             modifier = Modifier.padding(all = 12.dp),horizontalArrangement = Arrangement.Center
                         ){
@@ -125,12 +156,16 @@ class UpdateProductActivity : ComponentActivity() {
                             )
                         }
                         Row(
-                            modifier = Modifier.padding(all = 2.dp).height(100.dp).clickable {
-                                                                               //TODO launch bundle to get image, la imagen que se va a adjuntar
-                            },horizontalArrangement = Arrangement.Center
+                            modifier = Modifier
+                                .padding(all = 2.dp)
+                                .height(100.dp)
+                                .clickable {
+                                    //TODO launch bundle to get image, la imagen que se va a adjuntar
+                                },horizontalArrangement = Arrangement.Center
                         ){
                             Row(
-                                modifier = Modifier.padding(all = 2.dp),
+                                modifier = Modifier
+                                    .padding(all = 2.dp),
                                 horizontalArrangement = Arrangement.Center
                             ){
                                 Image(
@@ -139,7 +174,113 @@ class UpdateProductActivity : ComponentActivity() {
                                     Modifier
                                         .height(100.dp)
                                 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                ///////////////////////////////////////////////////////////////
+                                var imageUri by remember {mutableStateOf<Uri?>(null)}
+                                val context = LocalContext.current
+                                val bitmap =  remember {
+                                    mutableStateOf<Bitmap?>(null)
+                                }
+
+                                val launcher = rememberLauncherForActivityResult(contract =
+                                ActivityResultContracts.GetContent()) { uri: Uri? ->
+                                    imageUri = uri
+                                }
+
+                                Column() {
+                                    Button(onClick = {
+                                        launcher.launch("image/*")
+                                    }) {
+                                        Text(text = "Pick image")
+                                    }
+
+                                    Spacer(modifier = Modifier.height(12.dp))
+
+                                    imageUri?.let {
+                                        if (Build.VERSION.SDK_INT < 28) {
+                                            bitmap.value = MediaStore.Images
+                                                .Media.getBitmap(context.contentResolver,it)
+
+                                        } else {
+                                            val source = ImageDecoder
+                                                .createSource(context.contentResolver,it)
+                                            bitmap.value = ImageDecoder.decodeBitmap(source)
+                                        }
+
+                                        bitmap.value?.let {  btm ->
+                                            Image(bitmap = btm.asImageBitmap(),
+                                                contentDescription =null,
+                                                modifier = Modifier.size(400.dp))
+                                        }
+
+                                    }
+                                }
+                                ////////////////////////////////////////////////////////////////////
+
+                            Button(onClick = { bitmap.value?.let {
+                                    updateProductViewModel.updateProductImage(
+                                        it
+                                    )
+                                } }) {
+                                    Text(text = "ENVIAR IMAGEN")
+
+                                }
+
+
+
+
                             }
+
+
                         }
                         Row(
                             modifier = Modifier.padding(all = 2.dp),horizontalArrangement = Arrangement.Center

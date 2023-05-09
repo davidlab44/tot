@@ -1,6 +1,7 @@
 package com.david.tot.data.network
 
 import com.david.tot.domain.model.Product
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -16,6 +17,10 @@ interface IProductApiClient {
     @PUT("products/{id}")
     suspend fun updateProduct(@Path("id") id:String, @Body product:Product): Response<ResponseBody>
 
+
+    @Multipart
+    @POST("pictures")
+    suspend fun uploadPicture(@Part part: MultipartBody.Part): Response<ResponseBody>
 /*
     companion object {
         val instance: RecipeApiClient = Retrofit.Builder()
