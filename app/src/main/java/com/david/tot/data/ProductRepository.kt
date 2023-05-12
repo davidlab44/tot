@@ -57,9 +57,8 @@ class ProductRepository @Inject constructor(
             )
         )
         */
-        val part = MultipartBody.Part.createFormData(
-            "gato","perro",RequestBody.create("image/*".toMediaTypeOrNull(),file)
-        )
+
+        val part = MultipartBody.Part.createFormData("gato","perro",RequestBody.create("image/*".toMediaTypeOrNull(),file))
         api.uploadPicture(part)
     }
 }

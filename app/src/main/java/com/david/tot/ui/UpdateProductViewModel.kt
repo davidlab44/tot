@@ -79,10 +79,6 @@ class UpdateProductViewModel @Inject constructor(
         }
     }
 
-
-
-
-
     @RequiresApi(Build.VERSION_CODES.R)
     fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
         //create a file to write bitmap data
@@ -90,8 +86,18 @@ class UpdateProductViewModel @Inject constructor(
         return try {
             //file = File(Environment.getExternalStorageDirectory().toString() + File.separator + fileNameToSave)
             //TODO ojo Environment.getStorageDirectory() requires min sdk 30
-            file = File(Environment.getStorageDirectory().toString() + File.separator + fileNameToSave)
+            //file = File(Environment.getStorageDirectory().toString() + File.separator + fileNameToSave)
+            val path = System.getProperty("user.dir")
+            Log.e("Actual directory",path )
+            file = File("/storage/self/primary/Download" + File.separator + fileNameToSave)
+            Log.e("#001",Environment.getStorageDirectory().toString() + File.separator + fileNameToSave)
+            Log.e("Environment.getStorageDirectory().toString()",Environment.getStorageDirectory().toString() + File.separator + fileNameToSave)
+            Log.e("File.separator",File.separator)
+            Log.e("filename",fileNameToSave)
+            Log.e("Environment.getExternalStorageDirectory().toString() ",Environment.getExternalStorageDirectory().toString() )
+
             file.createNewFile()
+
 
             //Convert bitmap to byte array
             val bos = ByteArrayOutputStream()
@@ -109,6 +115,8 @@ class UpdateProductViewModel @Inject constructor(
             file // it will return null
         }
     }
+
+
 
 }
 
