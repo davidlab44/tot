@@ -41,6 +41,7 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -57,6 +58,7 @@ import androidx.compose.ui.unit.dp
 @AndroidEntryPoint
 class UpdateProductActivity : ComponentActivity() {
     private val updateProductViewModel: UpdateProductViewModel by viewModels()
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         /*
@@ -175,17 +177,16 @@ class UpdateProductActivity : ComponentActivity() {
                                 )
                             }
                         }
-
+                        val bitmap =  remember {mutableStateOf<Bitmap?>(null)}
+                        var imageUri by remember {mutableStateOf<Uri?>(null)}
+                        val context = LocalContext.current
                         Row(
                             modifier = Modifier
                                 .padding(all = 2.dp),
                             horizontalArrangement = Arrangement.Center
                         ){
-                            var imageUri by remember {mutableStateOf<Uri?>(null)}
-                            val context = LocalContext.current
-                            val bitmap =  remember {
-                                mutableStateOf<Bitmap?>(null)
-                            }
+
+
 
                             val launcher = rememberLauncherForActivityResult(contract =
                             ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -199,20 +200,13 @@ class UpdateProductActivity : ComponentActivity() {
                                     Text(text = "Pick image")
                                 }
                                 Spacer(modifier = Modifier.height(22.dp))
-                                Button(onClick = { bitmap.value?.let {
-                                    updateProductViewModel.updateProductImage(
-                                        it
-                                    )
-                                } }) {
-                                    Text(text = "ENVIAR IMAGEN")
-                                }
-                                Spacer(modifier = Modifier.height(22.dp))
+
+
 
                                 imageUri?.let {
                                     if (Build.VERSION.SDK_INT < 28) {
                                         bitmap.value = MediaStore.Images
                                             .Media.getBitmap(context.contentResolver,it)
-
                                     } else {
                                         val source = ImageDecoder
                                             .createSource(context.contentResolver,it)
@@ -222,10 +216,16 @@ class UpdateProductActivity : ComponentActivity() {
                                     bitmap.value?.let {  btm ->
                                         Image(bitmap = btm.asImageBitmap(),
                                             contentDescription =null,
-                                            modifier = Modifier.size(400.dp))
+                                            modifier = Modifier.size(80.dp))
                                     }
                                 }
-
+                                Button(onClick = { bitmap.value?.let {
+                                    updateProductViewModel.updateProductImage(
+                                        it
+                                    )
+                                } }) {
+                                    Text(text = "ENVIAR IMAGEN")
+                                }
                             }
                         }
                         Row(
@@ -239,8 +239,7 @@ class UpdateProductActivity : ComponentActivity() {
                             ) {
                                 Text("GUARDAR")
                             }
-
-                             */
+                            */
                         }
                     }
                 }

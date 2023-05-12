@@ -1,6 +1,11 @@
 package com.david.tot.ui
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
+import android.os.Environment
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,6 +19,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -56,18 +64,53 @@ class UpdateProductViewModel @Inject constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     fun updateProductImage(bitmap: Bitmap){
+        //val byteArray = convertBitmapToFile(bitmap)
         CoroutineScope(Dispatchers.IO).launch {
-            val inputStream = ImageFile().convertBitmapToInputStream(bitmap)
-            updateImageProductUseCase.invoke(inputStream)
+            //val byteArray: ByteArray? = ImageFile().encodeToBase64(bitmap)
+            val file = bitmapToFile(bitmap,"gato")
+
+            if (file != null) {
+                updateImageProductUseCase.invoke(file)
+            }else{
+                Log.e("TAG","bytearray es null")
+            }
         }
     }
 
 
 
+
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
+        //create a file to write bitmap data
+        var file: File? = null
+        return try {
+            //file = File(Environment.getExternalStorageDirectory().toString() + File.separator + fileNameToSave)
+            //TODO ojo Environment.getStorageDirectory() requires min sdk 30
+            file = File(Environment.getStorageDirectory().toString() + File.separator + fileNameToSave)
+            file.createNewFile()
+
+            //Convert bitmap to byte array
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
+            val bitmapdata = bos.toByteArray()
+
+            //write the bytes in file
+            val fos = FileOutputStream(file)
+            fos.write(bitmapdata)
+            fos.flush()
+            fos.close()
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            file // it will return null
+        }
+    }
+
 }
-
-
 
 
 /*

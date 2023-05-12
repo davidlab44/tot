@@ -7,7 +7,8 @@ import com.david.tot.domain.model.toDomain
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.*
+import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -49,12 +50,15 @@ class ProductRepository @Inject constructor(
         recipeDao.deleteAllRecipes()
     }
 
-    suspend fun updateImageProduct(
-        inputStream: InputStream
-        ) {
+    suspend fun updateImageProduct(file: File) {
+        /*
         val part = MultipartBody.Part.createFormData(
             "pic", "myPic", RequestBody.create("//com.android.providers.media.documents/document/image%3A1000059320".toMediaTypeOrNull(),inputStream.readBytes()
             )
+        )
+        */
+        val part = MultipartBody.Part.createFormData(
+            "gato","perro",RequestBody.create("image/*".toMediaTypeOrNull(),file)
         )
         api.uploadPicture(part)
     }
