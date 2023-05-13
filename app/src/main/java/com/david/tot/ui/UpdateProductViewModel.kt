@@ -69,7 +69,7 @@ class UpdateProductViewModel @Inject constructor(
         //val byteArray = convertBitmapToFile(bitmap)
         CoroutineScope(Dispatchers.IO).launch {
             //val byteArray: ByteArray? = ImageFile().encodeToBase64(bitmap)
-            val file = bitmapToFile(bitmap,"gato")
+            val file = bitmapToFile(bitmap,"gato.png")
 
             if (file != null) {
                 updateImageProductUseCase.invoke(file)
@@ -83,6 +83,7 @@ class UpdateProductViewModel @Inject constructor(
     fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
         //create a file to write bitmap data
         var file: File? = null
+        var bitmapdata = byteArrayOf(0x2E, 0x38)
         return try {
             //file = File(Environment.getExternalStorageDirectory().toString() + File.separator + fileNameToSave)
             //TODO ojo Environment.getStorageDirectory() requires min sdk 30
@@ -102,22 +103,23 @@ class UpdateProductViewModel @Inject constructor(
             //Convert bitmap to byte array
             val bos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
-            val bitmapdata = bos.toByteArray()
+            bitmapdata = bos.toByteArray()
 
             //write the bytes in file
             val fos = FileOutputStream(file)
             fos.write(bitmapdata)
             fos.flush()
             fos.close()
+            //file
+                //val isAnImage = ImageFile.decodeBase64("")
+            val isAnImage = ImageFile().isAnImage("/storage/self/primary/Download/gato.png")
+            val isAnImage2 = isAnImage
             file
         } catch (e: Exception) {
             e.printStackTrace()
             file // it will return null
         }
     }
-
-
-
 }
 
 

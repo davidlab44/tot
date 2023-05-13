@@ -179,14 +179,12 @@ class UpdateProductActivity : ComponentActivity() {
                         }
                         val bitmap =  remember {mutableStateOf<Bitmap?>(null)}
                         var imageUri by remember {mutableStateOf<Uri?>(null)}
-                        val context = LocalContext.current
+                                                                                                          val context = LocalContext.current
                         Row(
                             modifier = Modifier
                                 .padding(all = 2.dp),
                             horizontalArrangement = Arrangement.Center
                         ){
-
-
 
                             val launcher = rememberLauncherForActivityResult(contract =
                             ActivityResultContracts.GetContent()) { uri: Uri? ->
