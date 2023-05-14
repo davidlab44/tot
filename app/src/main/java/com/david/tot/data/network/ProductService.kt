@@ -45,9 +45,9 @@ class ProductService @Inject constructor(private val api:IProductApiClient) {
         }
     }
 
-    suspend fun uploadPicture(part:MultipartBody.Part){
+    suspend fun uploadPicture(idProduct:String,part:MultipartBody.Part){
         return withContext(Dispatchers.IO) {
-            val response = api.uploadPicture(part,"2")
+            val response = api.uploadPicture(part,idProduct)
             val res = response
         }
     }

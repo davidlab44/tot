@@ -10,8 +10,8 @@ import javax.inject.Inject
 class UpdateImageProductUseCase @Inject constructor(private val repository: ProductRepository) {
 
     //suspend operator fun invoke(byteArray: ByteArray){
-    suspend operator fun invoke(file:File){
-        return repository.updateImageProduct(file)
+    suspend operator fun invoke(idProduct:String,file:File){
+        return repository.updateImageProduct(idProduct,file)
 
     }
 }

@@ -49,11 +49,11 @@ class ProductRepository @Inject constructor(
         recipeDao.deleteAllRecipes()
     }
 
-    suspend fun updateImageProduct(file: File) {
+    suspend fun updateImageProduct(idProduct:String,file: File) {
         val isFile = IsImageFile().accept(file)
         val ii = isFile
         val requestFile: RequestBody = RequestBody.create("image/jpg".toMediaType(),file)
         val multipartImage = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-        api.uploadPicture(multipartImage)
+        api.uploadPicture(idProduct,multipartImage)
     }
 }

@@ -61,11 +61,11 @@ class UpdateProductViewModel @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    fun updateProductImage(bitmap: Bitmap){
+    fun updateProductImage(idProduct:String,bitmap: Bitmap){
         CoroutineScope(Dispatchers.IO).launch {
             val file = bitmapToFile(bitmap,"gato.png")
             if (file != null) {
-                updateImageProductUseCase.invoke(file)
+                updateImageProductUseCase.invoke(idProduct,file)
             }else{
                 Log.e("TAG","bytearray es null")
             }

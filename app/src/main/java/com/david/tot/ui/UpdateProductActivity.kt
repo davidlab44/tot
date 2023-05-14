@@ -219,6 +219,7 @@ class UpdateProductActivity : ComponentActivity() {
                                 }
                                 Button(onClick = { bitmap.value?.let {
                                     updateProductViewModel.updateProductImage(
+                                        updateProductViewModel.productRemoteId,
                                         it
                                     )
                                 } }) {
