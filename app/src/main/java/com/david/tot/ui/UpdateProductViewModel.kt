@@ -66,7 +66,7 @@ class UpdateProductViewModel @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.R)
     fun updateProductImage(idProduct:Int,bitmap: Bitmap){
         CoroutineScope(Dispatchers.IO).launch {
-            val file = bitmapToFile(bitmap,"gato.png")
+            val file = bitmapToFile(bitmap,"perro.png")
             if (file != null) {
                 updateImageProductUseCase.invoke(idProduct,file)
             }else{

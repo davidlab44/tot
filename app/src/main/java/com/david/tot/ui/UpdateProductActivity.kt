@@ -1,6 +1,5 @@
 package com.david.tot.ui
 
-import android.content.Intent
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
@@ -39,22 +38,12 @@ import android.graphics.Bitmap
 import android.net.Uri
 
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.*
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.Role.Companion.Image
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 
 @AndroidEntryPoint
 class UpdateProductActivity : ComponentActivity() {
@@ -102,7 +91,8 @@ class UpdateProductActivity : ComponentActivity() {
                     var imageUri by remember {mutableStateOf<Uri?>(null)}
                     val launcher = rememberLauncherForActivityResult(contract =
                     ActivityResultContracts.GetContent()) { uri: Uri? ->  imageUri = uri }
-                    var enabled  by rememberSaveable { mutableStateOf(true) }
+                    var enabledImage  by rememberSaveable { mutableStateOf(true) }
+                    var enabledProduct  by rememberSaveable { mutableStateOf(true) }
                     val context = LocalContext.current
 
                     Column( horizontalAlignment = Alignment.CenterHorizontally,
@@ -166,39 +156,37 @@ class UpdateProductActivity : ComponentActivity() {
                             )
                         }
                         Row(
-                            modifier = Modifier
-                                .padding(all = 2.dp)
-                                .height(100.dp)
-                                .clickable {
-                                    //TODO launch bundle to get image, la imagen que se va a adjuntar
-                                },horizontalArrangement = Arrangement.Center
+                            modifier = Modifier.padding(all = 20.dp),horizontalArrangement = Arrangement.Center
                         ){
-                            Row(
-                                modifier = Modifier
-                                    .padding(all = 2.dp),
-                                horizontalArrangement = Arrangement.Center
-                            ){
-                                Image(
-                                    painter = rememberImagePainter(IMAGE_BASE_URL+updateProductViewModel.productImage),
-                                    contentDescription = null,
-                                    Modifier
-                                        .height(100.dp).background(Color(0xFFe07967).copy(alpha = 0.6f)).clickable { launcher.launch("image/*") }
-                                )
+                            Button(enabled = enabledProduct, modifier = Modifier.padding(1.dp),
+                                onClick = {
+                                    enabledImage = false
+                                    updateProductViewModel.updateProduct()
+                                    //TODO ojo validar si efectivamente la respuesta dice que se GUARDO LA NUEVA INFORMACION
+                                    Toast.makeText(context, "Producto modificado exitosamente", Toast.LENGTH_SHORT).show()
+                                }) {
+                                Text(text = "GUARDAR")
                             }
                         }
+                        Spacer(modifier = Modifier.height(12.dp))
                         Row(
-                            modifier = Modifier
-                                .padding(all = 2.dp),
+                            modifier = Modifier.padding(all = 2.dp).height(100.dp),
                             horizontalArrangement = Arrangement.Center
                         ){
-                            /*
-                            Button(onClick = {
-
-                            }) {
-                                Text(text = "Pick image")
-                            }
-
-                            */
+                            Image(
+                                painter = rememberImagePainter(IMAGE_BASE_URL+updateProductViewModel.productImage),
+                                contentDescription = null,
+                                Modifier.border(1.dp, Color.Red).height(100.dp).background(Color(0xFFe07967).copy(alpha = 0.6f))
+                                    .clickable {
+                                        launcher.launch("image/*")
+                                        enabledProduct = false
+                                    }
+                            )
+                        }
+                        Row(
+                            modifier = Modifier.padding(all = 2.dp),
+                            horizontalArrangement = Arrangement.Center
+                        ){
                             imageUri?.let {
                                 if (Build.VERSION.SDK_INT < 28) {
                                     bitmap.value = MediaStore.Images
@@ -211,22 +199,25 @@ class UpdateProductActivity : ComponentActivity() {
 
                                 bitmap.value?.let {  btm ->
                                     Column( horizontalAlignment = Alignment.CenterHorizontally,
-                                        modifier = Modifier.padding(20.dp)) {
+                                        modifier = Modifier.padding(2.dp)) {
                                         Row(
-                                            modifier = Modifier.padding(all = 12.dp),horizontalArrangement = Arrangement.Center
+                                            modifier = Modifier.padding(all = 2.dp),horizontalArrangement = Arrangement.Center
                                         ) {
                                             Image(bitmap = btm.asImageBitmap(),
                                                 contentDescription =null,
-                                                modifier = Modifier.size(80.dp).background(Color(0xFF49fc03).copy(alpha = 0.6f)))
+                                                modifier = Modifier.border(2.dp, Color.Green).size(80.dp).background(Color(0xFF49fc03).copy(alpha = 0.6f))
+                                            )
                                         }
                                         Row(
                                             modifier = Modifier.padding(all = 12.dp),horizontalArrangement = Arrangement.Center
                                         ) {
-                                            Button(enabled = enabled, modifier = Modifier.padding(1.dp),
+                                            Button(enabled = enabledImage, modifier = Modifier.padding(1.dp),
                                                 onClick = {
-                                                    enabled = false
+                                                    enabledImage = false
                                                     bitmap.value?.let {
                                                     updateProductViewModel.updateProductImage(updateProductViewModel.productRemoteId.toInt(), it)
+                                                    //TODO ojo validar si efectivamente la respuesta json dice que se cambio la imagen
+                                                    Toast.makeText(context, "Imagen cambiada exitosamente", Toast.LENGTH_SHORT).show()
                                                 } }) {
                                                 Text(text = "ENVIAR IMAGEN")
                                             }
@@ -234,19 +225,6 @@ class UpdateProductActivity : ComponentActivity() {
                                     }
                                 }
                             }
-                        }
-                        Row(
-                            modifier = Modifier.padding(all = 2.dp),horizontalArrangement = Arrangement.Center
-                        ){
-                            /*
-                            Button(onClick = {updateProductViewModel.updateProduct()},
-                                modifier = Modifier
-                                    .padding(bottom = 10.dp)
-                                    .height(60.dp)
-                            ) {
-                                Text("GUARDAR")
-                            }
-                            */
                         }
                     }
                 }
