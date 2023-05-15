@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -35,6 +37,7 @@ class UpdateProductViewModel @Inject constructor(
     var productImage by mutableStateOf<String>("")
     var productPrice by mutableStateOf<String>("")
     var backgroundColor: Color by mutableStateOf(Color.Transparent)
+    var activityDestroy by mutableStateOf<Boolean>(false)
 
     fun updateProduct(){
         if(productName.trim().length>1&&productDescription.trim().length>1&&productPrice.toInt()>1) {
@@ -61,13 +64,13 @@ class UpdateProductViewModel @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    fun updateProductImage(idProduct:String,bitmap: Bitmap){
+    fun updateProductImage(idProduct:Int,bitmap: Bitmap){
         CoroutineScope(Dispatchers.IO).launch {
             val file = bitmapToFile(bitmap,"gato.png")
             if (file != null) {
                 updateImageProductUseCase.invoke(idProduct,file)
             }else{
-                Log.e("TAG","bytearray es null")
+                Log.e("TAG","file is null")
             }
         }
     }
@@ -92,4 +95,5 @@ class UpdateProductViewModel @Inject constructor(
             file
         }
     }
+
 }

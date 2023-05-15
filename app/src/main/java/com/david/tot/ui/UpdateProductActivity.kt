@@ -49,6 +49,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role.Companion.Image
@@ -79,6 +80,7 @@ class UpdateProductActivity : ComponentActivity() {
         updateProductViewModel.productImage = bundle!!.getString("image").toString()
         updateProductViewModel.productPrice = bundle!!.getString("price").toString()
 
+
         setContent {
             TotTheme(darkTheme = false) {
                 //val updateProductViewModel = viewModel<UpdateProductViewModel>()
@@ -96,6 +98,13 @@ class UpdateProductActivity : ComponentActivity() {
                         finish()
                     }
                     */
+                    val bitmap =  remember {mutableStateOf<Bitmap?>(null)}
+                    var imageUri by remember {mutableStateOf<Uri?>(null)}
+                    val launcher = rememberLauncherForActivityResult(contract =
+                    ActivityResultContracts.GetContent()) { uri: Uri? ->  imageUri = uri }
+                    var enabled  by rememberSaveable { mutableStateOf(true) }
+                    val context = LocalContext.current
+
                     Column( horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .border(1.dp, Color.Gray, RectangleShape)
@@ -173,57 +182,56 @@ class UpdateProductActivity : ComponentActivity() {
                                     painter = rememberImagePainter(IMAGE_BASE_URL+updateProductViewModel.productImage),
                                     contentDescription = null,
                                     Modifier
-                                        .height(100.dp)
+                                        .height(100.dp).background(Color(0xFFe07967).copy(alpha = 0.6f)).clickable { launcher.launch("image/*") }
                                 )
                             }
                         }
-                        val bitmap =  remember {mutableStateOf<Bitmap?>(null)}
-                        var imageUri by remember {mutableStateOf<Uri?>(null)}
-                                                                                                          val context = LocalContext.current
                         Row(
                             modifier = Modifier
                                 .padding(all = 2.dp),
                             horizontalArrangement = Arrangement.Center
                         ){
+                            /*
+                            Button(onClick = {
 
-                            val launcher = rememberLauncherForActivityResult(contract =
-                            ActivityResultContracts.GetContent()) { uri: Uri? ->
-                                imageUri = uri
+                            }) {
+                                Text(text = "Pick image")
                             }
 
-                            Column() {
-                                Button(onClick = {
-                                    launcher.launch("image/*")
-                                }) {
-                                    Text(text = "Pick image")
+                            */
+                            imageUri?.let {
+                                if (Build.VERSION.SDK_INT < 28) {
+                                    bitmap.value = MediaStore.Images
+                                        .Media.getBitmap(context.contentResolver,it)
+                                } else {
+                                    val source = ImageDecoder
+                                        .createSource(context.contentResolver,it)
+                                    bitmap.value = ImageDecoder.decodeBitmap(source)
                                 }
-                                Spacer(modifier = Modifier.height(22.dp))
 
-
-
-                                imageUri?.let {
-                                    if (Build.VERSION.SDK_INT < 28) {
-                                        bitmap.value = MediaStore.Images
-                                            .Media.getBitmap(context.contentResolver,it)
-                                    } else {
-                                        val source = ImageDecoder
-                                            .createSource(context.contentResolver,it)
-                                        bitmap.value = ImageDecoder.decodeBitmap(source)
+                                bitmap.value?.let {  btm ->
+                                    Column( horizontalAlignment = Alignment.CenterHorizontally,
+                                        modifier = Modifier.padding(20.dp)) {
+                                        Row(
+                                            modifier = Modifier.padding(all = 12.dp),horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Image(bitmap = btm.asImageBitmap(),
+                                                contentDescription =null,
+                                                modifier = Modifier.size(80.dp).background(Color(0xFF49fc03).copy(alpha = 0.6f)))
+                                        }
+                                        Row(
+                                            modifier = Modifier.padding(all = 12.dp),horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Button(enabled = enabled, modifier = Modifier.padding(1.dp),
+                                                onClick = {
+                                                    enabled = false
+                                                    bitmap.value?.let {
+                                                    updateProductViewModel.updateProductImage(updateProductViewModel.productRemoteId.toInt(), it)
+                                                } }) {
+                                                Text(text = "ENVIAR IMAGEN")
+                                            }
+                                        }
                                     }
-
-                                    bitmap.value?.let {  btm ->
-                                        Image(bitmap = btm.asImageBitmap(),
-                                            contentDescription =null,
-                                            modifier = Modifier.size(80.dp))
-                                    }
-                                }
-                                Button(onClick = { bitmap.value?.let {
-                                    updateProductViewModel.updateProductImage(
-                                        updateProductViewModel.productRemoteId,
-                                        it
-                                    )
-                                } }) {
-                                    Text(text = "ENVIAR IMAGEN")
                                 }
                             }
                         }

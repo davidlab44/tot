@@ -20,6 +20,6 @@ interface IProductApiClient {
 
     @Multipart
     @POST("pictures")
-    suspend fun uploadPicture(@Part part: MultipartBody.Part,@Part("id_product") id:String): Response<ResponseBody>
+    suspend fun uploadPicture(@Part part: MultipartBody.Part,@Part("id_product") id_product:Int): Response<ResponseBody>
 }
 
