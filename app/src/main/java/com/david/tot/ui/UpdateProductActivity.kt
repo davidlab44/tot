@@ -1,5 +1,6 @@
 package com.david.tot.ui
 
+import android.content.Intent
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
@@ -78,15 +79,6 @@ class UpdateProductActivity : ComponentActivity() {
                     //color = MaterialTheme.colors.background
                     color = updateProductViewModel.backgroundColor
                 ) {
-                    /*
-                    //TODO OJO refactor este IF pasa actualizandose constantemente despues de selccionar la imagen despues de lanzar este metodo rememberLauncherForActivityResult()
-                    if (updateProductViewModel.response == 1) {
-                        Toast.makeText(LocalContext.current, "Producto editado exitosamente", Toast.LENGTH_LONG).show()
-                        Thread.sleep(500)
-                        startActivity(Intent(this@UpdateProductActivity,MainActivity::class.java))
-                        finish()
-                    }
-                    */
                     val bitmap =  remember {mutableStateOf<Bitmap?>(null)}
                     var imageUri by remember {mutableStateOf<Uri?>(null)}
                     val launcher = rememberLauncherForActivityResult(contract =
@@ -162,8 +154,6 @@ class UpdateProductActivity : ComponentActivity() {
                                 onClick = {
                                     enabledImage = false
                                     updateProductViewModel.updateProduct()
-                                    //TODO ojo validar si efectivamente la respuesta dice que se GUARDO LA NUEVA INFORMACION
-                                    Toast.makeText(context, "Producto modificado exitosamente", Toast.LENGTH_SHORT).show()
                                 }) {
                                 Text(text = "GUARDAR")
                             }
@@ -216,8 +206,6 @@ class UpdateProductActivity : ComponentActivity() {
                                                     enabledImage = false
                                                     bitmap.value?.let {
                                                     updateProductViewModel.updateProductImage(updateProductViewModel.productRemoteId.toInt(), it)
-                                                    //TODO ojo validar si efectivamente la respuesta json dice que se cambio la imagen
-                                                    Toast.makeText(context, "Imagen cambiada exitosamente", Toast.LENGTH_SHORT).show()
                                                 } }) {
                                                 Text(text = "ENVIAR IMAGEN")
                                             }
@@ -227,8 +215,21 @@ class UpdateProductActivity : ComponentActivity() {
                             }
                         }
                     }
+                    if(updateProductViewModel.activityDestroy){
+                        updateProductViewModel.activityDestroy = false
+                        Toast.makeText(context, "Producto modificado exitosamente", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+                    if(updateProductViewModel.failedToast){
+                        Toast.makeText(context, "No se pudo modificar el producto", Toast.LENGTH_SHORT).show()
+                        updateProductViewModel.failedToast =false
+                    }
                 }
             }
         }
+
     }
 }

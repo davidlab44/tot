@@ -41,6 +41,7 @@ fun ScreenDetail(remoteIdProduct: String, recipeViewModel:RecipeViewModel) {
     }
 
     if(launchActivity){
+        launchActivity = false
         val context = LocalContext.current
         val intent = Intent(context,UpdateProductActivity::class.java)
         intent.putExtra("id_local", recipeViewModel.productLocalId.toString())
@@ -71,7 +72,13 @@ fun ScreenDetail(remoteIdProduct: String, recipeViewModel:RecipeViewModel) {
                 text = recipeViewModel.productDescription,
                 textAlign = TextAlign.Center, color = Color.Black, fontSize = 12.sp, fontWeight = FontWeight.Black)
         }
-
+        Row(
+            modifier = Modifier.padding(all = 12.dp),horizontalArrangement = Arrangement.Center
+        ){
+            Text(
+                text = "Precio: "+recipeViewModel.productPrice,
+                textAlign = TextAlign.Center, color = Color.Black, fontSize = 12.sp, fontWeight = FontWeight.Black)
+        }
         Row(
             modifier = Modifier
                 .padding(all = 12.dp)

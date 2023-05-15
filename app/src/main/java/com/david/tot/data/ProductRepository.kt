@@ -26,8 +26,8 @@ class ProductRepository @Inject constructor(
     }
 
     suspend fun updateProduct(product:Product):Int{
-        api.updateProduct(product)
-        return 1
+        val responseCode = api.updateProduct(product)
+        return responseCode
     }
 
     suspend fun getAllRecipesFromDatabase():List<Product>{
@@ -49,11 +49,13 @@ class ProductRepository @Inject constructor(
         recipeDao.deleteAllRecipes()
     }
 
-    suspend fun updateImageProduct(idProduct:Int,file: File) {
+    suspend fun updateImageProduct(idProduct:Int,file: File) :Int {
         val isFile = IsImageFile().accept(file)
         val ii = isFile
         val requestFile: RequestBody = RequestBody.create("image/jpg".toMediaType(),file)
         val multipartImage = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-        api.uploadPicture(idProduct,multipartImage)
+        val responseCode = api.uploadPicture(idProduct,multipartImage)
+        val responseCode2 = responseCode
+        return responseCode
     }
 }

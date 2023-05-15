@@ -4,8 +4,6 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -29,7 +27,7 @@ class UpdateProductViewModel @Inject constructor(
     private val updateImageProductUseCase: UpdateImageProductUseCase,
     ) : ViewModel() {
 
-    var response by mutableStateOf<Int>(0)
+    var responseCode by mutableStateOf<Int>(0)
     var productRemoteId by mutableStateOf<String>("")
     var productLocalId by mutableStateOf<String>("")
     var productName by mutableStateOf<String>("")
@@ -38,26 +36,21 @@ class UpdateProductViewModel @Inject constructor(
     var productPrice by mutableStateOf<String>("")
     var backgroundColor: Color by mutableStateOf(Color.Transparent)
     var activityDestroy by mutableStateOf<Boolean>(false)
+    var failedToast by mutableStateOf<Boolean>(false)
 
     fun updateProduct(){
         if(productName.trim().length>1&&productDescription.trim().length>1&&productPrice.toInt()>1) {
-            val product = Product(
-                productLocalId.toInt(),
-                productRemoteId.toInt(),
-                productName,
-                productImage,
-                productDescription,
-                productPrice.toInt(),
-                0,
-                0,
-                1
+            val product = Product(productLocalId.toInt(),productRemoteId.toInt(),productName,productImage,productDescription,
+                productPrice.toInt(),0,0,1
             )
             CoroutineScope(Dispatchers.IO).launch {
-                response = updateProductUseCase.invoke(product)
-                if (response == 1) {
+                responseCode = updateProductUseCase.invoke(product)
+                if (responseCode == 200) {
                     backgroundColor = Color(0xFF8BE400)
+                    activityDestroy = true
                 } else {
                     backgroundColor = Color(0xFFFFA4AE)
+                    failedToast = true
                 }
             }
         }
@@ -66,9 +59,15 @@ class UpdateProductViewModel @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.R)
     fun updateProductImage(idProduct:Int,bitmap: Bitmap){
         CoroutineScope(Dispatchers.IO).launch {
-            val file = bitmapToFile(bitmap,"perro.png")
+            val time = System.currentTimeMillis()
+            val file = bitmapToFile(bitmap,"gato"+time+"gato.png")
             if (file != null) {
-                updateImageProductUseCase.invoke(idProduct,file)
+                val responseCode = updateImageProductUseCase.invoke(idProduct,file)
+                if(responseCode == 200){
+                    activityDestroy = true
+                }else{
+                    failedToast = true
+                }
             }else{
                 Log.e("TAG","file is null")
             }
@@ -95,5 +94,4 @@ class UpdateProductViewModel @Inject constructor(
             file
         }
     }
-
 }
