@@ -40,5 +40,10 @@
             android:exported="false"
             android:parentActivityName=".ui.MainActivity">
         </activity>
+        <activity
+            android:name="com.david.tot.ui.DeleteProductActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity">
+        </activity>
     </application>
 </manifest>

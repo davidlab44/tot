@@ -30,6 +30,11 @@ class ProductRepository @Inject constructor(
         return responseCode
     }
 
+    suspend fun deleteProduct(id:Int):Int{
+        val responseCode = api.deleteProduct(id)
+        return responseCode
+    }
+
     suspend fun getAllRecipesFromDatabase():List<Product>{
         val response: List<Product> = recipeDao.getAllRecipes()
         return response.map { it.toDomain() }

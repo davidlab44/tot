@@ -18,6 +18,9 @@ interface IProductApiClient {
     @PUT("products/{id}")
     suspend fun updateProduct(@Path("id") id:String, @Body product:Product): Response<ResponseBody>
 
+    @PUT("delete-product/{id}")
+    suspend fun deleteProduct(@Path("id") id:Int): Response<ResponseBody>
+
     @Multipart
     @POST("pictures")
     suspend fun uploadPicture(@Part part: MultipartBody.Part,@Part("id_product") id_product:Int): Response<ResponseBody>

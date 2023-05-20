@@ -22,7 +22,8 @@ import com.david.tot.util.IMAGE_BASE_URL
 @Composable
 fun ScreenDetail(remoteIdProduct: String, recipeViewModel:RecipeViewModel) {
 
-    var launchActivity by rememberSaveable { mutableStateOf(false) }
+    var launchUpdateProductActivity by rememberSaveable { mutableStateOf(false) }
+    var launchDeleteProductActivity by rememberSaveable { mutableStateOf(false) }
 
     for(product in recipeViewModel.recipeModel){
         if (product.id == remoteIdProduct.toInt()){
@@ -40,10 +41,23 @@ fun ScreenDetail(remoteIdProduct: String, recipeViewModel:RecipeViewModel) {
         }
     }
 
-    if(launchActivity){
-        launchActivity = false
+    if(launchUpdateProductActivity){
+        launchUpdateProductActivity = false
         val context = LocalContext.current
         val intent = Intent(context,UpdateProductActivity::class.java)
+        intent.putExtra("id_local", recipeViewModel.productLocalId.toString())
+        intent.putExtra("id_remote", recipeViewModel.productRemoteId.toString())
+        intent.putExtra("name", recipeViewModel.productName)
+        intent.putExtra("description", recipeViewModel.productDescription)
+        intent.putExtra("image", recipeViewModel.productImage)
+        intent.putExtra("price", recipeViewModel.productPrice.toString())
+        context.startActivity(intent)
+    }
+
+    if(launchDeleteProductActivity){
+        launchDeleteProductActivity = false
+        val context = LocalContext.current
+        val intent = Intent(context,DeleteProductActivity::class.java)
         intent.putExtra("id_local", recipeViewModel.productLocalId.toString())
         intent.putExtra("id_remote", recipeViewModel.productRemoteId.toString())
         intent.putExtra("name", recipeViewModel.productName)
@@ -99,12 +113,24 @@ fun ScreenDetail(remoteIdProduct: String, recipeViewModel:RecipeViewModel) {
             modifier = Modifier.padding(all = 12.dp),horizontalArrangement = Arrangement.Center
         ){
             androidx.compose.material3.Button(
-                onClick = { launchActivity=true},
+                onClick = { launchUpdateProductActivity=true},
                 modifier = Modifier
                     .padding(bottom = 10.dp)
                     .height(60.dp)
             ) {
                 androidx.compose.material3.Text("EDITAR")
+            }
+        }
+        Row(
+            modifier = Modifier.padding(all = 20.dp),horizontalArrangement = Arrangement.Center
+        ){
+            androidx.compose.material3.Button(
+                onClick = { launchDeleteProductActivity=true},
+                modifier = Modifier
+                    .padding(bottom = 10.dp)
+                    .height(60.dp)
+            ) {
+                androidx.compose.material3.Text("ELIMINAR")
             }
         }
     }

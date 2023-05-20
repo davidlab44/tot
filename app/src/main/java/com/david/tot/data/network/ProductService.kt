@@ -45,6 +45,13 @@ class ProductService @Inject constructor(private val api:IProductApiClient) {
         }
     }
 
+    suspend fun deleteProduct(id:Int):Int{
+        return withContext(Dispatchers.IO) {
+            val response = api.deleteProduct(id)
+            val res = response
+            response.code()
+        }
+    }
     suspend fun uploadPicture(idProduct:Int,part:MultipartBody.Part):Int{
         return withContext(Dispatchers.IO) {
             val response = api.uploadPicture(part,idProduct)
