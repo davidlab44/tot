@@ -79,6 +79,7 @@ class UpdateProductActivity : ComponentActivity() {
                     //color = MaterialTheme.colors.background
                     color = updateProductViewModel.backgroundColor
                 ) {
+                    // TODO replace remember  bitmap and imageUri for  rememberSaveable
                     val bitmap =  remember {mutableStateOf<Bitmap?>(null)}
                     var imageUri by remember {mutableStateOf<Uri?>(null)}
                     val launcher = rememberLauncherForActivityResult(contract =
