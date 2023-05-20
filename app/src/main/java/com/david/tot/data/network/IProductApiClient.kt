@@ -18,7 +18,7 @@ interface IProductApiClient {
     @PUT("products/{id}")
     suspend fun updateProduct(@Path("id") id:String, @Body product:Product): Response<ResponseBody>
 
-    @PUT("delete-product/{id}")
+    @DELETE("products/{id}")
     suspend fun deleteProduct(@Path("id") id:Int): Response<ResponseBody>
 
     @Multipart
